@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>ຈັດການຄູປອງ &amp; ໂຄ້ດຟຣີ</title>
+<script src="guard.js"></script>
+<link rel="stylesheet" href="admin-nav.css">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e8321f;--red-rgb:232,50,31;--line:#26262a;--mut:#8b8b94;--f:'IBM Plex Sans Thai Looped','Outfit',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:#000;color:#fff;font-family:var(--f);min-height:100%}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.cp{max-width:720px;margin:0 auto;padding:18px 20px calc(env(safe-area-inset-bottom,0px) + 60px)}
+.cp h1{font-size:26px;font-weight:700;letter-spacing:.2px}
+.cp .sub{color:var(--mut);font-size:14px;margin:8px 0 18px}
+.tabs{display:flex;gap:8px;margin-bottom:18px}
+.tb{height:46px;padding:0 16px;border-radius:12px;background:#17171a;border:1px solid var(--line);color:#c9c9d1;font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
+.tb svg{width:16px;height:16px}
+.tb.on{background:var(--red);border-color:var(--red);color:#fff}
+.card{border:1px solid rgba(var(--red-rgb),.35);border-radius:20px;background:#000;padding:20px 22px;margin-bottom:18px;box-shadow:0 0 28px rgba(var(--red-rgb),.07)}
+.card.list{border-color:var(--line);box-shadow:none}
+.ct{display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;margin-bottom:18px}
+.ct svg{width:22px;height:22px;color:var(--red);flex:none}
+label{display:block;color:#a3a3ad;font-size:13.5px;margin:0 0 8px}
+.fld{margin-bottom:18px}
+.in{width:100%;height:50px;border-radius:12px;border:1px solid var(--line);background:#0b0b0c;padding:0 16px;outline:none;font-size:15px;color:#fff;-webkit-appearance:none;appearance:none;min-width:0}
+.in::placeholder{color:#6f6f78}
+.in:focus,.in.foc{border-color:var(--red)}
+select.in{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='16' fill='none' stroke='%23777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6l3-3 3 3M3 10l3 3 3-3'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+input[type=datetime-local].in{display:block;max-width:100%;color-scheme:dark;text-align:center}
+.pbox{border:1px solid var(--line);border-radius:14px;background:#000;padding:14px;margin-top:10px;display:flex;flex-wrap:wrap;gap:14px;max-height:260px;overflow:auto}
+.pi{width:84px;text-align:left;font-size:12px;font-weight:600;color:#c9c9d1;overflow:hidden}
+.pi .tl{width:48px;height:48px;border-radius:14px;background:#fff center/cover no-repeat;display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:background-color .15s}
+.pi .tl svg{width:26px;height:26px;color:#fff;opacity:0;transform:scale(.6);transition:.15s}
+.pi.on .tl{background-color:#3b82f6;background-image:none!important}
+.pi.on .tl svg{opacity:1;transform:none}
+.pi span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pe{color:var(--mut);font-size:13px;padding:6px 2px}
+.hint{color:#6f6f78;font-size:12.5px;margin:-8px 0 18px}
+.hint.b{margin:0 0 12px}
+.go{width:100%;height:50px;border-radius:12px;background:var(--red);color:#fff;font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 22px rgba(var(--red-rgb),.3)}
+.go:disabled{opacity:.55}
+.go svg{width:16px;height:16px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;min-width:620px}
+th{color:#9a9aa3;font-weight:500;font-size:13px;text-align:left;padding:10px 10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:16px 10px;font-size:14px;border-bottom:1px solid #151517;white-space:nowrap;vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.code{color:var(--red);font-weight:600}
+.bd{display:inline-block;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:600;color:#5b9bff;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.45)}
+.ex{color:#8b8b94;text-decoration:line-through}
+.exn{display:block;color:#ff4d3d;text-decoration:none;font-size:13px}
+.del{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:9px;border:1px solid rgba(var(--red-rgb),.55);background:rgba(var(--red-rgb),.1);color:#ff5a49;font-weight:600;font-size:13px}
+.del svg{width:14px;height:14px}
+.emp{text-align:center;color:var(--mut);padding:26px 0!important}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);transform:translate(-50%,20px);background:#1b1b1f;border:1px solid var(--line);padding:11px 18px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:60;max-width:90%}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.pane{display:none}.pane.on{display:block}
+</style>
+<script>window.EX_THEME_ADMIN=1</script>
+<script src="theme.js"></script>
+<script src="admin-i18n.js"></script>
+<script src="i18n.js"></script>
+<script src="admin-lang.js"></script>
+</head>
+<body>
+<script src="admin-nav.js"></script>
+<div class="cp">
+  <h1>ຈັດການຄູປອງ &amp; ໂຄ້ດຟຣີ</h1>
+  <p class="sub">ຕັ້ງຄ່າໂຄ້ດສ່ວນຫຼຸດສິນຄ້າ ແລະໂຄ້ດເຄຣດິດຟຣີສຳລັບໂປຣໂມດຮ້ານຄ້າ</p>
+
+  <div class="tabs" id="tabs">
+    <button class="tb on" data-t="c" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>ຄູປອງສ່ວນຫຼຸດຊື້ສິນຄ້າ</button>
+    <button class="tb" data-t="f" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>ໂຄ້ດຟຣີເຕີມເງິນ</button>
+  </div>
+
+  <!-- ===== แท็บ 1: คูปองส่วนลด ===== -->
+  <div class="pane on" id="pc">
+    <div class="card">
+      <div class="ct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg>ສ້າງຄູປອງສ່ວນຫຼຸດໃໝ່</div>
+      <div class="fld"><label>ລະຫັດຄູປອງ (ຕົວອັກສອນ/ຕົວເລກ)</label><input class="in" id="c_code" placeholder="ເຊັ່ນ SAVE10" maxlength="30" autocapitalize="characters" autocomplete="off" spellcheck="false"></div>
+      <div class="fld"><label>ປະເພດສ່ວນຫຼຸດ</label><select class="in" id="c_kind"><option value="pct">ເປີເຊັນ (%)</option><option value="amt">ຈຳນວນເງິນ (₭)</option></select></div>
+      <div class="fld"><label>ມູນຄ່າສ່ວນຫຼຸດ</label><input class="in" id="c_val" inputmode="numeric" value="0" autocomplete="off"></div>
+      <div class="fld"><label>ຈຳກັດຈຳນວນ (ຄັ້ງ)</label><input class="in" id="c_max" inputmode="numeric" placeholder="ບໍ່ຈຳກັດ" autocomplete="off"></div>
+      <div class="fld"><label>ຈຳກັດຕໍ່ຜູ້ໃຊ້ (ຄັ້ງ)</label><input class="in" id="c_per" inputmode="numeric" placeholder="ບໍ່ຈຳກັດ" autocomplete="off"></div>
+      <div class="fld" style="margin-bottom:8px"><label>ໃຊ້ໄດ້ກັບສິນຄ້າ</label><input class="in" id="c_q" placeholder="ຄົ້ນຫາຊື່ສິນຄ້າ / ໝວດ..." autocomplete="off">
+        <div class="pbox" id="c_prods"><div class="pe">ກຳລັງໂຫຼດ...</div></div></div>
+      <p class="hint" style="margin-top:10px">ບໍ່ເລືອກ = ໃຊ້ໄດ້ທຸກສິນຄ້າ · ເລືອກແລ້ວໃຊ້ໄດ້ສະເພາະລາຍການທີ່ຕິກ</p>
+      <div class="fld"><label>ຍອດຊື້ຂັ້ນຕ່ຳ (₭)</label><input class="in" id="c_min" inputmode="numeric" value="0" autocomplete="off"></div>
+      <div class="fld"><label>ວັນໝົດອາຍຸຄູປອງ</label><input class="in" id="c_exp" type="datetime-local"></div>
+      <p class="hint">ຈຳນວນການໃຊ້ງານ / ຈຳກັດຕໍ່ຜູ້ໃຊ້ — ເວ້ນຫວ່າງ ຫຼື 0 = ບໍ່ຈຳກັດ</p>
+      <button class="go" id="c_go" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>ບັນທຶກ ແລະເປີດໃຊ້ງານຄູປອງ</button>
+    </div>
+    <div class="card list">
+      <div class="ct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>ຄູປອງທັງໝົດໃນລະບົບ</div>
+      <div class="tw"><table><thead><tr><th>ລະຫັດຄູປອງ</th><th>ສ່ວນຫຼຸດ</th><th>ຂັ້ນຕ່ຳ</th><th>ການໃຊ້ງານ (ລວມ)</th><th>ຈຳກັດ/ຜູ້ໃຊ້</th><th>ໝົດອາຍຸ</th><th>ຈັດການ</th></tr></thead><tbody id="c_list"><tr><td colspan="7" class="emp">ກຳລັງໂຫຼດ...</td></tr></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ===== แท็บ 2: ໂຄ້ດຟຣີເຕີມເງິນ ===== -->
+  <div class="pane" id="pf">
+    <div class="card">
+      <div class="ct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>ສ້າງໂຄ້ດຟຣີເຕີມເງິນໃໝ່</div>
+      <div class="fld"><label>ລະຫັດໂຄ້ດ (ຕົວອັກສອນ/ຕົວເລກ)</label><input class="in" id="f_code" placeholder="ເຊັ່ນ FREE50" maxlength="30" autocapitalize="characters" autocomplete="off" spellcheck="false"></div>
+      <div class="fld"><label>ຈຳນວນເຄຣດິດທີ່ໄດ້ຮັບ (₭)</label><input class="in" id="f_amt" inputmode="numeric" value="0" autocomplete="off"></div>
+      <div class="fld"><label>ຈຳກັດຈຳນວນ (ຄັ້ງ)</label><input class="in" id="f_max" inputmode="numeric" placeholder="ບໍ່ຈຳກັດ" autocomplete="off"></div>
+      <div class="fld"><label>ວັນໝົດອາຍຸໂຄ້ດ</label><input class="in" id="f_exp" type="datetime-local"></div>
+      <p class="hint">ຈຳນວນການໃຊ້ງານ — ເວ້ນຫວ່າງ ຫຼື 0 = ບໍ່ຈຳກັດ · ສະມາຊິກ 1 ຄົນໃຊ້ໂຄ້ດດຽວກັນໄດ້ເທື່ອດຽວ</p>
+      <button class="go" id="f_go" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>ບັນທຶກ ແລະເປີດໃຊ້ງານໂຄ້ດ</button>
+    </div>
+    <div class="card list">
+      <div class="ct"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>ໂຄ້ດຟຣີທັງໝົດໃນລະບົບ</div>
+      <div class="tw"><table><thead><tr><th>ລະຫັດໂຄ້ດ</th><th>ເຄຣດິດ</th><th>ການໃຊ້ງານ (ລວມ)</th><th>ໝົດອາຍຸ</th><th>ຈັດການ</th></tr></thead><tbody id="f_list"><tr><td colspan="5" class="emp">ກຳລັງໂຫຼດ...</td></tr></tbody></table></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var $ = function(s){ return document.querySelector(s); };
+  var tt, busy = false, PRODS = [], SEL = {};
+  var nf = new Intl.NumberFormat('en-US');
+  var T = function(s){ return typeof window.exTr === 'function' ? window.exTr(s) : s; };
+  var TRASH = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 3h6l1 2h4v2H4V5h4zM6 9h12l-1 11a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z"/></svg>';
+  var CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+  function toast(m){ var t = $('#toast'); t.textContent = m; t.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ t.classList.remove('show'); }, 2800); }
+  function tok(){ return exToken(); }
+  function num(v){ return parseInt(String(v || '').replace(/[^\d]/g, ''), 10) || 0; }
+  function p2(n){ return n < 10 ? '0' + n : '' + n; }
+  function dt(s){ var d = new Date(s); return p2(d.getDate()) + '/' + p2(d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + p2(d.getHours()) + ':' + p2(d.getMinutes()); }
+  function iso(v){ if(!v) return null; var d = new Date(v); return isNaN(d) ? null : d.toISOString(); }
+  var ERR = { bad_code:'ລະຫັດຕ້ອງເປັນ A-Z, 0-9, _ ຫຼື - ຍາວ 3–30 ຕົວ', bad_kind:'ປະເພດສ່ວນຫຼຸດບໍ່ຖືກຕ້ອງ', bad_value:'ມູນຄ່າບໍ່ຖືກຕ້ອງ (ເປີເຊັນຕ້ອງ 1–100)', exists:'ມີລະຫັດນີ້ຢູ່ແລ້ວ', not_admin:'ບໍ່ມີສິດແອດມິນ', nf:'ບໍ່ພົບລະຫັດນີ້' };
+  function fail(j){ toast((j && ERR[j.code]) || 'ເຮັດບໍ່ສຳເລັດ'); }
+
+  /* ---- แท็บ ---- */
+  $('#tabs').addEventListener('click', function(e){
+    var b = e.target.closest('.tb'); if(!b) return;
+    document.querySelectorAll('.tb').forEach(function(x){ x.classList.toggle('on', x === b); });
+    $('#pc').classList.toggle('on', b.dataset.t === 'c');
+    $('#pf').classList.toggle('on', b.dataset.t === 'f');
+  });
+  document.querySelectorAll('input[inputmode=numeric]').forEach(function(i){
+    i.addEventListener('input', function(){ i.value = i.value.replace(/[^\d]/g, ''); });
+    i.addEventListener('focus', function(){ if(i.value === '0') i.select(); });
+  });
+  ['c_code','f_code'].forEach(function(id){ $('#' + id).addEventListener('input', function(e){ e.target.value = e.target.value.toUpperCase().replace(/[^A-Z0-9_-]/g, ''); }); });
+
+  /* ---- สินค้า ---- */
+  function img(p){
+    var m = p.imgs; if(typeof m === 'string'){ try{ m = JSON.parse(m); }catch(e){ m = [m]; } }
+    var u = Array.isArray(m) && m.length ? m[0] : '';
+    if(u && typeof u === 'object') u = u.url || u.src || '';
+    return u || '';
+  }
+  function drawProds(){
+    var q = $('#c_q').value.trim().toLowerCase();
+    var rows = PRODS.filter(function(p){ return !q || (String(p.name || '') + ' ' + String(p.cat || '')).toLowerCase().indexOf(q) > -1; });
+    $('#c_prods').innerHTML = rows.length ? rows.map(function(p){
+      var u = img(p);
+      return '<button type="button" class="pi' + (SEL[p.id] ? ' on' : '') + '" data-id="' + p.id + '"><div class="tl"' + (u ? ' style="background-image:url(\'' + esc(u).replace(/'/g, '%27') + '\')"' : '') + '>' + CHECK + '</div><span>' + esc(p.name) + '</span></button>';
+    }).join('') : '<div class="pe">ບໍ່ພົບສິນຄ້າ</div>';
+  }
+  $('#c_q').addEventListener('input', drawProds);
+  $('#c_prods').addEventListener('click', function(e){
+    var b = e.target.closest('.pi'); if(!b) return;
+    var id = b.dataset.id; if(SEL[id]) delete SEL[id]; else SEL[id] = 1;
+    b.classList.toggle('on', !!SEL[id]);
+  });
+  function loadProds(){
+    exRpc('shop_products', {}).then(function(r){
+      PRODS = Array.isArray(r) ? r : (r && r.rows) || []; drawProds();
+    }).catch(function(){ $('#c_prods').innerHTML = '<div class="pe">ໂຫຼດສິນຄ້າບໍ່ໄດ້</div>'; });
+  }
+
+  /* ---- รายการคูปอง ---- */
+  function expCell(s){
+    if(!s) return '<span style="color:#8b8b94">ບໍ່ໝົດອາຍຸ</span>';
+    return new Date(s) < new Date() ? '<span class="ex">' + dt(s) + '</span><span class="exn">(ໝົດອາຍຸແລ້ວ)</span>' : dt(s);
+  }
+  function loadC(){
+    exRpc('adm_coupon_list', { p_token: tok() }).then(function(j){
+      var rows = (j && j.ok && j.rows) || [];
+      $('#c_list').innerHTML = rows.length ? rows.map(function(r){
+        return '<tr><td class="code">' + esc(r.code) + '</td><td>' + (r.kind === 'pct' ? nf.format(r.value) + '%' : '₭' + nf.format(r.value)) + '</td><td>₭' + nf.format(r.min_purchase || 0) + '</td>'
+          + '<td>' + nf.format(r.used || 0) + ' / ' + (r.max_uses ? nf.format(r.max_uses) : '∞') + '</td>'
+          + '<td>' + (r.per_user_max ? '<span class="bd">' + r.per_user_max + ' ຄັ້ງ/ຄົນ</span>' : '—') + '</td>'
+          + '<td>' + expCell(r.expires_at) + '</td>'
+          + '<td><button class="del" type="button" data-k="c" data-c="' + esc(r.code) + '">' + TRASH + 'ລຶບ</button></td></tr>';
+      }).join('') : '<tr><td colspan="7" class="emp">— ຍັງບໍ່ມີຄູປອງໃນລະບົບ —</td></tr>';
+    }).catch(function(){ $('#c_list').innerHTML = '<tr><td colspan="7" class="emp">ໂຫຼດບໍ່ໄດ້ ກະລຸນາລອງໃໝ່</td></tr>'; });
+  }
+  function loadF(){
+    exRpc('adm_free_code_list', { p_token: tok() }).then(function(j){
+      var rows = (j && j.ok && j.rows) || [];
+      $('#f_list').innerHTML = rows.length ? rows.map(function(r){
+        return '<tr><td class="code">' + esc(r.code) + '</td><td>₭' + nf.format(r.amount) + '</td>'
+          + '<td>' + nf.format(r.used || 0) + ' / ' + (r.max_uses ? nf.format(r.max_uses) : '∞') + '</td>'
+          + '<td>' + expCell(r.expires_at) + '</td>'
+          + '<td><button class="del" type="button" data-k="f" data-c="' + esc(r.code) + '">' + TRASH + 'ລຶບ</button></td></tr>';
+      }).join('') : '<tr><td colspan="5" class="emp">— ຍັງບໍ່ມີໂຄ້ດຟຣີໃນລະບົບ —</td></tr>';
+    }).catch(function(){ $('#f_list').innerHTML = '<tr><td colspan="5" class="emp">ໂຫຼດບໍ່ໄດ້ ກະລຸນາລອງໃໝ່</td></tr>'; });
+  }
+
+  /* ---- ลบ ---- */
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('.del'); if(!b || busy) return;
+    var f = b.dataset.k === 'f', c = b.dataset.c;
+    if(!confirm(T(f ? 'ລຶບໂຄ້ດຟຣີ {c} ?' : 'ລຶບຄູປອງ {c} ?').replace('{c}', c))) return;
+    busy = true;
+    exRpc(f ? 'adm_free_code_delete' : 'adm_coupon_delete', { p_token: tok(), p_code: c }).then(function(j){
+      busy = false;
+      if(j && j.ok){ toast('ລຶບແລ້ວ'); f ? loadF() : loadC(); } else fail(j);
+    }).catch(function(){ busy = false; toast('ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້'); });
+  });
+
+  /* ---- บันทึกคูปอง ---- */
+  $('#c_go').onclick = function(){
+    if(busy) return;
+    var code = $('#c_code').value.trim(), kind = $('#c_kind').value, val = num($('#c_val').value);
+    if(code.length < 3){ toast('ກະລຸນາໃສ່ລະຫັດຄູປອງ (ຢ່າງໜ້ອຍ 3 ຕົວ)'); return; }
+    if(val <= 0){ toast('ກະລຸນາໃສ່ມູນຄ່າສ່ວນຫຼຸດ'); return; }
+    if(kind === 'pct' && val > 100){ toast('ເປີເຊັນຕ້ອງບໍ່ເກີນ 100'); return; }
+    var ids = Object.keys(SEL).map(Number);
+    busy = true; $('#c_go').disabled = true;
+    exRpc('adm_coupon_save', { p_token: tok(), p_code: code, p_kind: kind, p_value: val, p_max_uses: num($('#c_max').value) || null, p_per_user: num($('#c_per').value) || null, p_product_ids: ids, p_min: num($('#c_min').value), p_expires: iso($('#c_exp').value) }).then(function(j){
+      busy = false; $('#c_go').disabled = false;
+      if(j && j.ok){
+        toast(T('ສ້າງຄູປອງ {c} ແລ້ວ').replace('{c}', j.code));
+        ['c_code','c_max','c_per','c_exp'].forEach(function(id){ $('#' + id).value = ''; });
+        $('#c_val').value = '0'; $('#c_min').value = '0'; $('#c_kind').value = 'pct'; SEL = {}; drawProds(); loadC();
+      } else fail(j);
+    }).catch(function(){ busy = false; $('#c_go').disabled = false; toast('ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້'); });
+  };
+
+  /* ---- บันทึกโค้ดฟรี ---- */
+  $('#f_go').onclick = function(){
+    if(busy) return;
+    var code = $('#f_code').value.trim(), amt = num($('#f_amt').value);
+    if(code.length < 3){ toast('ກະລຸນາໃສ່ລະຫັດໂຄ້ດ (ຢ່າງໜ້ອຍ 3 ຕົວ)'); return; }
+    if(amt <= 0){ toast('ກະລຸນາໃສ່ຈຳນວນເຄຣດິດ'); return; }
+    busy = true; $('#f_go').disabled = true;
+    exRpc('adm_free_code_save', { p_token: tok(), p_code: code, p_amount: amt, p_max_uses: num($('#f_max').value) || null, p_expires: iso($('#f_exp').value) }).then(function(j){
+      busy = false; $('#f_go').disabled = false;
+      if(j && j.ok){
+        toast(T('ສ້າງໂຄ້ດ {c} ແລ້ວ').replace('{c}', j.code));
+        ['f_code','f_max','f_exp'].forEach(function(id){ $('#' + id).value = ''; }); $('#f_amt').value = '0'; loadF();
+      } else fail(j);
+    }).catch(function(){ busy = false; $('#f_go').disabled = false; toast('ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້'); });
+  };
+
+  /* ---- ตรวจสิทธิ์แอดมิน ---- */
+  if(!tok()){ try{ sessionStorage.setItem('exNext','admin-coupons.html'); }catch(e){} location.replace('index.html?auth=login'); return; }
+  exRpc('member_is_admin', { p_token: tok() }).then(function(j){
+    if(j && j.ok && j.admin){ loadProds(); loadC(); loadF(); } else location.replace('index.html');
+  }).catch(function(){ toast('ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້'); });
+})();
+</script>
+</body>
+</html>

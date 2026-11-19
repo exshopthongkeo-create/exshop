@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.dataset.theme="dark";document.documentElement.classList.add("chk")</script>
+<script src="admin-pin.js"></script>
+<title>ຈັດການແຜງຮ້ານ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Sans+Lao+Looped:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ff0000;--red-rgb:255,0,0;--bg:#fbfbfb;--card:#ffffff;--text:#1b1b1d;--muted:#8a8a90;--border:#ececee;
+  --glow:rgba(var(--red-rgb),.10);--redline:rgba(var(--red-rgb),.28);--redsoft:rgba(var(--red-rgb),.07);--crumb:#ff0000;
+  --ibg:#fbe5e5;--blue:#2f6fe0;--bluebg:#e6efff;--pur:#8a4fe0;--purbg:#f0e8ff;--amb:#d98a00;--ambbg:#fff2d6;
+  --font:'Outfit','Noto Sans Lao Looped',system-ui,sans-serif;--nfont:'IBM Plex Sans','Noto Sans Lao Looped',system-ui,sans-serif;--ac:#ff0000;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#000;--card:#000;--text:#f3f3f4;--muted:#9a9aa3;--border:#2a2a2e;
+  --glow:rgba(var(--red-rgb),.12);--redline:rgba(var(--red-rgb),.32);--redsoft:rgba(var(--red-rgb),.10);--crumb:#ff0000;
+  --ibg:#000;--blue:#5b9cff;--bluebg:#111c33;--pur:#b07cff;--purbg:#241638;--amb:#ffb62e;--ambbg:#2e2008}
+html{background:#000;color-scheme:dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--text);font-family:var(--font)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:11}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;align-items:center;gap:12px;padding:12px 17px;background:var(--bg);border-bottom:1px solid #1a1a1a}
+.menu-btn{width:41px;height:41px;border-radius:13px;border:1px solid #232323;background:#000;color:var(--text);display:grid;place-items:center;cursor:pointer}
+.menu-btn svg{width:20px;height:20px}
+h1{margin:0;font-size:18px;font-weight:700}
+.dot{margin-left:auto;width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red)}
+main{min-height:calc(100vh - 80px);padding:17px}
+
+/* การ์ดสถานะเວັບໄຊ — วัดจากรูปอ้างอิง */
+.sub-card{position:relative;overflow:hidden;font-family:var(--nfont);border-radius:18px;padding:17px;background:#050000;border:1px solid rgba(var(--red-rgb),.17);box-shadow:0 0 40px rgba(var(--red-rgb),.07)}
+.sub-top{display:flex;align-items:center;gap:18px}
+.sub-ico{flex:none;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:rgba(var(--red-rgb),.14);box-shadow:0 0 26px rgba(var(--red-rgb),.17)}
+.sub-ico svg{width:30px;height:30px;color:var(--ac)}
+.sub-body{min-width:0}
+.pill{display:inline-flex;align-items:center;gap:9px;height:26px;padding:0 12px 0 10px;border-radius:999px;background:#240505;border:1px solid #480f0d;color:var(--ac);font:500 10px/1 var(--nfont);letter-spacing:.06em;text-transform:uppercase}
+.pill i{width:6px;height:6px;border-radius:50%;background:#94170f}
+.sub-title{margin:8px 0;font:700 20px/26px var(--nfont)}
+.sub-desc{margin:0;font-size:12px;line-height:1.4;color:#6f6f6f}
+.sub-btn{margin-top:18px;width:100%;height:46.5px;border:0;border-radius:12px;background:var(--ac);color:#fff;font:600 15px var(--nfont);display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 6px 24px rgba(var(--red-rgb),.35);transition:transform .18s cubic-bezier(.3,.7,.3,1),filter .18s}
+.sub-btn:active{transform:scale(.98);filter:brightness(.94)}
+.sub-btn svg{width:16px;height:16px}
+.crumb{margin:16px 0 18px 1px;font-size:12.5px;color:var(--crumb)}
+
+/* ภาพรวมสถิติ */
+.adm{position:relative;overflow:hidden;border-radius:24px;padding:19px 19px 20px;background:radial-gradient(110% 100% at 0% 100%,var(--glow),transparent 65%),var(--card);border:1px solid var(--redline);box-shadow:0 0 36px var(--redsoft)}
+.adm-top{display:flex;align-items:center;gap:16px}
+.adm-ico{flex:none;width:43px;height:43px;border-radius:14px;background:var(--ibg);border:1px solid var(--border);display:grid;place-items:center}
+.adm-ico svg{width:22px;height:22px;color:var(--red)}
+.adm-lbl{display:flex;align-items:center;gap:9px;color:var(--red);font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.adm-lbl i{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red)}
+.adm-title{margin:4px 0 0;font-size:22px;font-weight:600;line-height:1.3}
+.adm-pill{margin-top:18px;display:inline-flex;align-items:center;gap:10px;padding:9px 17px;border-radius:999px;background:var(--redsoft);border:1px solid var(--redline);color:var(--red);font:700 15px var(--font)}
+.adm-pill svg{width:18px;height:18px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px}
+.st{border-radius:22px;padding:16px 17px;background:var(--card);border:1px solid var(--border);min-height:121px;display:flex;flex-direction:column}
+.st-h{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.st-t{font-size:13.5px;color:var(--muted);line-height:1.35;padding-top:4px}
+.st-i{flex:none;width:35px;height:35px;border-radius:12px;display:grid;place-items:center}
+.st-i svg{width:18px;height:18px}
+.st-v{margin-top:auto;font-size:26px;font-weight:700;line-height:1.15}
+.st-s{margin-top:8px;font-size:14px;font-weight:500;line-height:1.35}
+.c-red .st-i{background:var(--ibg);border:1px solid var(--border);color:var(--red)}.c-red .st-s{color:var(--red)}
+.c-blue .st-i{background:var(--bluebg);color:var(--blue)}.c-blue .st-s{color:var(--blue)}
+.c-pur .st-i{background:var(--purbg);color:var(--pur)}.c-pur .st-v,.c-pur .st-s{color:var(--pur)}
+.c-amb .st-i{background:var(--ambbg);color:var(--amb)}.c-amb .st-v,.c-amb .st-s{color:var(--amb)}
+html.chk body{visibility:hidden}
+.note{margin:0 0 14px;padding:10px 14px;border-radius:14px;background:var(--redsoft);border:1px solid var(--redline);color:var(--red);font-size:13px;line-height:1.5}
+.st-v.ld,.adm-pill.ld{opacity:.55}
+
+/* ===== ແນວໂນ້ມຍອດເຕີມເງິນ (กราฟแนวโน้ม) — วัดจากรูปอ้างอิง ===== */
+.tr{margin-top:14px;border-radius:22px;padding:18px 17px 17px;background:#080808;border:1px solid #232323;font-family:var(--font)}
+.tr-h{display:flex;align-items:center;gap:15px}
+.tr-i{flex:none;width:39px;height:39px;border-radius:12px;background:#2a0909;display:grid;place-items:center;color:var(--red)}
+.tr-i svg{width:20px;height:20px}
+.tr-t{margin:0;font-size:19px;font-weight:600;line-height:1.3}
+.tr-s{margin:3px 0 0;font-size:13.5px;color:#6d6d72;line-height:1.35}
+.tr-tabs{margin-top:17px;display:flex;gap:2px;padding:5px;border:1px solid #2a2a2e;border-radius:16px;background:#050505;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tr-tabs::-webkit-scrollbar{display:none}
+.tr-tab{flex:none;height:34px;padding:0 14px;border:0;border-radius:12px;background:none;color:#9a9aa3;font:500 15px var(--font);cursor:pointer;white-space:nowrap;transition:background .25s,color .25s,transform .15s}
+.tr-tab.on{background:var(--red);color:#fff;font-weight:600}
+.tr-tab:active{transform:scale(.97)}
+.tr-chart{position:relative;margin-top:14px;height:118px;transition:opacity .2s}
+.tr-chart.ld{opacity:.55}
+.tr-chart svg{display:block;width:100%;height:118px;overflow:visible}
+.tr-chart text{font-family:var(--nfont);font-size:6.5px;fill:#5a5a60}
+.tr-g{stroke:#161618;stroke-width:1}
+.tr-l{fill:none;stroke:var(--red);stroke-width:1.4;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:trDraw .9s ease forwards}
+@keyframes trDraw{to{stroke-dashoffset:0}}
+.tr-p{fill:#0a0a0a;stroke:var(--red);stroke-width:1.3}
+.tr-hit{fill:transparent;cursor:pointer}
+.tr-tip{position:absolute;z-index:2;padding:5px 9px;border-radius:9px;background:#140505;border:1px solid var(--redline);color:#fff;font:600 11px var(--nfont);white-space:nowrap;pointer-events:none;transform:translate(-50%,-130%);opacity:0;transition:opacity .15s}
+.tr-tip.on{opacity:1}
+
+/* ===== ຢືນຢັນເຕີມເງິນ (รายการรออนุมัติ กดยืนยันได้ทันที) ===== */
+.cf{margin-top:14px;border-radius:22px;padding:18px 17px 8px;background:#080808;border:1px solid #232323;font-family:var(--font)}
+.cf-h{display:flex;align-items:center;gap:15px}
+.cf-i{flex:none;width:39px;height:39px;border-radius:12px;background:#2a0909;display:grid;place-items:center;color:var(--red)}
+.cf-i svg{width:20px;height:20px}
+.cf-t{margin:0;font-size:19px;font-weight:600;line-height:1.3}
+.cf-s{margin:3px 0 0;font-size:13.5px;color:#6d6d72;line-height:1.35}
+.cf-n{margin-left:auto;flex:none;min-width:28px;height:28px;padding:0 9px;border-radius:999px;display:grid;place-items:center;background:var(--red);color:#fff;font:700 13px var(--nfont)}
+.cf-n.z{background:#161618;color:#6d6d72}
+.cf-l{margin-top:16px}
+.cf-it{border:1px solid #232323;border-radius:16px;background:#050505;padding:13px 14px;margin-bottom:12px}
+.cf-r{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.cf-u{font-weight:700;font-size:15px;word-break:break-all}
+.cf-a{font:800 18px var(--nfont);color:var(--red);white-space:nowrap}
+.cf-m{margin-top:4px;color:#6d6d72;font-size:12.5px}
+.cf-b{display:flex;gap:8px;margin-top:11px}
+.cf-b button{flex:1;height:40px;border-radius:12px;border:1px solid #2a2a2e;background:none;color:#c9c9c9;font:600 13.5px var(--font);cursor:pointer;transition:transform .15s,opacity .2s}
+.cf-b button:active{transform:scale(.97)}
+.cf-b button:disabled{opacity:.5}
+.cf-b .no{color:#ff8a87;border-color:#d95b58}
+.cf-b .ok{background:#2fbf71;border-color:#2fbf71;color:#000}
+.cf-e{text-align:center;color:#6d6d72;font-size:14px;padding:22px 0 26px}
+.cf-ov{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;padding:18px}
+.cf-ov.show{display:flex}
+.cf-ov img{max-width:100%;max-height:82vh;border-radius:12px;border:1px solid #2a2a2e}
+.cf-ov b{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:14px;width:40px;height:40px;border-radius:50%;background:#1a1a1d;display:grid;place-items:center;font-size:18px;font-weight:400}
+
+/* เมนูแถบหัว (กดแล้วเลื່ອນລົງ) — วัดจากรูปอ้างอิง */
+.menu-btn{position:relative}
+.menu-btn svg{position:absolute;inset:0;margin:auto;transition:opacity .18s,transform .22s}
+.menu-btn .ic-x{opacity:0;transform:rotate(-90deg) scale(.7)}
+header.open .menu-btn .ic-menu{opacity:0;transform:rotate(90deg) scale(.7)}
+header.open .menu-btn .ic-x{opacity:1;transform:none}
+.nav{--nfont:'IBM Plex Sans','Noto Sans Lao Looped',system-ui,sans-serif;position:absolute;top:100%;left:0;right:0;background:#070707;border-bottom:1px solid #202020;padding:13px 13px 10px;max-height:calc(100vh - 90px);overflow:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .22s,transform .22s,visibility .22s;z-index:9}
+header.open .nav{opacity:1;visibility:visible;transform:none}
+.nr{display:flex;align-items:center;gap:6px;width:100%;height:41px;padding:0 10.5px;background:none;border:1px solid transparent;border-radius:18px;color:#a0a0a0;font:500 13px var(--nfont);text-align:left;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s,color .2s}
+.nr .ic{width:18px;height:18px;flex:none;color:#919191;transition:color .2s}
+.nr .chev{width:13px;height:13px;margin-left:2px;flex:none;color:#5b5b5b;transition:transform .25s,color .2s}
+.nr:active{opacity:.75}
+.nr-web,.nr-dash{height:36.5px;gap:5.5px}
+.nr-web .ic,.nr-dash .ic{width:16px;height:16px}
+.nr-web{margin-bottom:4px;border-color:rgba(var(--red-rgb),.45);color:var(--red);font-weight:700}
+.nr-web .ic{color:var(--red)}
+.nr-dash{margin-bottom:2px}
+.nr-dash.on{background:rgba(var(--red-rgb),.16);border-color:rgba(var(--red-rgb),.45);color:#fff;font-weight:600}
+.nr-dash.on .ic{color:#eae6e6}
+.grp.open>.nr{height:36.5px;margin:2.5px 0 0;background:#161616;border-color:#2e2e2e;color:#fff}
+.nr-dash+.grp.open>.nr{margin-top:4.5px}
+.grp.open>.nr .ic{color:var(--red)}
+.grp.open>.nr .chev{transform:rotate(180deg);color:#969696}
+.gw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease}
+.grp.open .gw{grid-template-rows:1fr}
+.gi{overflow:hidden;min-height:0}
+.sp{margin:6px 0 2px;padding:8px;border:1px solid #232323;border-radius:16px;background:#000}
+.si{display:flex;align-items:center;gap:11px;width:100%;height:46px;padding:0 14px 0 13px;border:0;border-radius:12px;background:none;color:#c9c9c9;font:400 14px var(--nfont);text-align:left;cursor:pointer;transition:background .2s,color .2s}
+.si .ic{width:18px;height:18px;flex:none;color:#737373;transition:color .2s}
+.si:active{opacity:.75}
+.si.on{background:rgba(var(--red-rgb),.14);color:var(--red)}
+.si.on .ic{color:var(--red)}
+.si .gn{flex:none;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:#161616;border:1px solid #262626;color:#8d8d8d;font:600 12px var(--nfont)}
+.si.on::after{content:"";margin-left:auto;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.sp .empty{padding:12px 14px;font:400 14px var(--nfont);color:#737373}
+/* ===== หน้า ຈັດການສິນຄ້າ & ໝວດໝູ່ ===== */
+.view[hidden]{display:none}
+#vProd{margin-top:20px;font-family:var(--nfont)}
+.tabs{position:relative;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab-ind{position:absolute;left:0;top:0;height:36.5px;width:0;border-radius:12px;background:var(--ac);box-shadow:0 0 20px rgba(var(--red-rgb),.4);transition:transform .42s cubic-bezier(.65,0,.25,1),width .42s cubic-bezier(.65,0,.25,1);pointer-events:none}
+.tab-ind.no-anim{transition:none}
+.tab{position:relative;z-index:1;flex:none;display:flex;align-items:center;gap:8px;height:36.5px;padding:0 16px 0 13.5px;border:0;border-radius:12px;background:none;color:#949494;font:500 14px var(--nfont);cursor:pointer;white-space:nowrap;transition:color .3s,transform .18s cubic-bezier(.3,.7,.3,1)}
+.tab:active{transform:scale(.97)}
+.tab svg{width:14px;height:14px;flex:none}
+.tab.on{color:#fff}
+.pane{display:none}
+.pane.on{display:block}
+.srch{margin-top:12.5px;height:40px;display:flex;align-items:center;gap:10px;padding:0 12px;border:1px solid #222;border-radius:12px;background:#000;transition:border-color .25s,box-shadow .25s}
+.srch:focus-within{border-color:rgba(var(--red-rgb),.6);box-shadow:0 0 0 3px rgba(var(--red-rgb),.12)}
+.srch svg{width:16px;height:16px;flex:none;color:#666;transition:color .25s}
+.srch:focus-within svg{color:var(--ac)}
+.srch input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;color:#fff;font:400 14px var(--nfont)}
+.srch input::placeholder{color:#a0a0a8;opacity:1}
+.addb{margin-top:7px;width:100%;height:41px;border:0;border-radius:12px;background:var(--ac);color:#fff;font:600 15px var(--nfont);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 4px 22px rgba(var(--red-rgb),.3);transition:transform .18s cubic-bezier(.3,.7,.3,1),filter .18s}
+.addb:active{transform:scale(.985);filter:brightness(.94)}
+.addb svg{width:16px;height:16px}
+.chips{margin-top:7px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:1px 0}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:flex;align-items:center;gap:8px;height:35px;padding:0 15px 0 13px;border:1px solid #78201a;border-radius:999px;background:#2e0706;color:var(--ac);font:500 14px var(--nfont);cursor:pointer;transition:transform .18s cubic-bezier(.3,.7,.3,1),background .25s,border-color .25s}
+.chip:active{transform:scale(.96)}
+.chip svg{width:14px;height:14px;flex:none}
+.empty-l{margin-top:15px;padding:49px 0;text-align:center;font:400 14px/22px var(--nfont);color:#6f6f6f}
+.cm-card{margin-top:14px;padding:22px 20px;border-radius:24px;background:#000;border:1px solid rgba(var(--red-rgb),.38);box-shadow:0 10px 44px rgba(var(--red-rgb),.08)}
+.cm-card.plain{border-color:#1f1f23;box-shadow:none}
+.cm-card h3{margin:0 0 4px;font:600 22px/1.3 var(--nfont);color:#fff}
+.cm-card h3 em{font-style:normal;font-weight:400;font-size:18px;color:#76767e;margin-left:8px}
+.cm-card .pm-l{margin-top:20px}
+.cm-drop{height:150px}
+.cm-drop:hover,.cm-drop.drag{border-color:var(--red)}
+.cm-save{margin-top:20px;width:100%;height:54px;border:0;border-radius:16px;background:var(--red);color:#fff;font:600 18px var(--nfont);display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 6px 30px rgba(var(--red-rgb),.5);transition:transform .15s,opacity .2s}
+.cm-save:active{transform:scale(.985)}
+.cm-save:disabled{opacity:.55;cursor:default}
+.cm-cancel{display:block;margin:12px auto 0;background:none;border:0;color:#8b8b93;font:500 15px var(--nfont);cursor:pointer;padding:6px 10px}
+.cm-list{display:grid;gap:10px;margin-top:14px}
+.cm-list:empty{display:none}
+.cm-card.plain .empty-l{padding:44px 0 36px;margin-top:6px}
+.pm-i.bad{border-color:#ff3b30;box-shadow:0 0 0 3px rgba(255,59,48,.18)}
+
+@media (prefers-reduced-motion:reduce){.tab-ind{transition:none}}
+.snack{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);padding:11px 18px;border-radius:999px;background:#18181b;border:1px solid #2a2a30;color:#f3f3f4;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:50}
+.snack.show{opacity:1;transform:translate(-50%,0)}
+/* ===== โมดัล ເພີ່ມສິນຄ້າ / ແກ້ໄຂສິນຄ້າ (ตามรูปอ้างอิง) + รายการสินค้า ===== */
+.plist{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.pr{display:flex;align-items:center;gap:12px;padding:11px;border-radius:16px;background:#000;border:1px solid #1f1f23}
+.pr-im{flex:none;width:58px;height:58px;border-radius:12px;overflow:hidden;background:#000;border:1px solid #1f1f23;display:grid;place-items:center;color:#4a4a52}
+.pr-im img{width:100%;height:100%;object-fit:cover;display:block}
+.pr-im svg{width:22px;height:22px}
+.pr-b{min-width:0;flex:1}
+.pr-n{font:600 15px/1.3 var(--nfont);color:#f3f3f4;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pr-m{margin-top:4px;font:400 12.5px/1.4 var(--nfont);color:#8f8f97;display:flex;flex-wrap:wrap;gap:2px 10px}
+.pr-m b{color:var(--red);font-weight:600}
+.pr-st{display:inline-flex;align-items:center;gap:5px;margin-top:6px;height:21px;padding:0 9px;border-radius:999px;font:500 11.5px var(--nfont);background:#0f2a18;color:#3ecf72;border:1px solid #17462a}
+.pr-st.upd{background:#2a2000;color:#ffb62e;border-color:#5a4300}
+.pr-st.off{background:#1a1a1c;color:#8f8f97;border-color:#2a2a2e}
+.pr-a{flex:none;display:flex;flex-direction:column;gap:8px}
+.pr-btn{width:36px;height:36px;border-radius:11px;border:1px solid #26262b;background:#000;color:#c9c9cf;display:grid;place-items:center;cursor:pointer;transition:transform .15s,background .2s}
+.pr-btn:active{transform:scale(.94)}
+.pr-btn svg{width:16px;height:16px}
+.pr-btn.del{color:#ff3b30;border-color:#3a1511;background:#180807}
+
+.pm{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-start;justify-content:center;padding:calc(env(safe-area-inset-top,0px) + 56px) 15px 60px;background:rgba(0,0,0,.9);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .22s;font-family:var(--nfont)}
+.pm[hidden]{display:none}
+.pm.on{opacity:1}
+.pm-card{width:100%;max-width:520px;max-height:100%;display:flex;flex-direction:column;border-radius:22px;background:#000;border:1px solid #1f1f22;box-shadow:0 24px 80px rgba(0,0,0,.7);transform:translateY(14px) scale(.985);transition:transform .28s cubic-bezier(.22,.8,.3,1);overflow:hidden}
+.pm.on .pm-card{transform:none}
+.pm-h{flex:none;display:flex;align-items:center;gap:12px;padding:0 20px;height:67px;border-bottom:1px solid #1f1f22}
+.pm-brush{width:24px;height:24px;flex:none;display:grid;place-items:center}
+.pm-brush svg{width:24px;height:24px}
+.pm-h h3{margin:0;flex:1;font:600 20px/1 var(--nfont);color:#fff}
+.pm-x{width:34px;height:34px;margin-right:-8px;border:0;background:none;color:#8d8d94;display:grid;place-items:center;cursor:pointer;border-radius:10px}
+.pm-x svg{width:20px;height:20px}
+.pm-b{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:18px 20px 22px;scrollbar-width:thin;scrollbar-color:#2a2a2e transparent}
+.pm-l{display:flex;align-items:center;gap:7px;margin:24px 0 8px;font:400 14.5px/1.3 var(--nfont);color:#8b8b93}
+.pm-b>.pm-l:first-child{margin-top:0}
+.pm-l i{font-style:normal;color:var(--red)}
+.pm-l svg{width:16px;height:16px;flex:none}
+.pm-i{display:block;width:100%;height:41px;padding:0 16px;border-radius:13px;border:1px solid #1e1e21;background:#000;color:#f3f3f4;font:400 16px var(--nfont);outline:0;-webkit-appearance:none;appearance:none;transition:border-color .2s,box-shadow .2s}
+.pm-i::placeholder{color:#6d6d75;opacity:1}
+.pm-i:focus{border-color:rgba(var(--red-rgb),.65);box-shadow:0 0 0 3px rgba(var(--red-rgb),.12)}
+.pm-i.bad{border-color:#ff3b30;box-shadow:0 0 0 3px rgba(255,59,48,.18)}
+.pm-i[type=number]{-moz-appearance:textfield}
+.pm-i[type=number]::-webkit-outer-spin-button,.pm-i[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.pm-sel{position:relative}
+.pm-sel select{padding-right:42px;cursor:pointer;text-overflow:ellipsis}
+.pm-sel::after{content:"";position:absolute;right:15px;top:50%;width:12px;height:16px;transform:translateY(-50%);pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 16' fill='none' stroke='%23777' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6 6 2.5 9.5 6M2.5 10 6 13.5 9.5 10'/%3E%3C/svg%3E") center/contain no-repeat}
+.pm-drop{position:relative;height:118px;border-radius:18px;border:1.5px dashed #343438;background:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;transition:border-color .2s}
+.pm-drop:active,.pm-drop.drag{border-color:var(--red)}
+.pm-dc{display:flex;flex-direction:column;align-items:center;gap:14px;color:#85858c;font:400 14.5px var(--nfont);text-align:center;padding:0 12px}
+.pm-dc svg{width:38px;height:38px}
+.pm-drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000}
+.pm-rm{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:50%;border:1px solid #333;background:rgba(0,0,0,.7);color:#fff;display:grid;place-items:center;cursor:pointer}
+.pm-rm svg{width:14px;height:14px}
+.pm-rm[hidden]{display:none}
+.pm-up{margin:10px 0;height:36px;padding:0 16px;display:inline-flex;align-items:center;gap:9px;border-radius:12px;border:1px solid rgba(var(--red-rgb),.45);background:rgba(var(--red-rgb),.12);color:var(--red);font:600 15px var(--nfont);cursor:pointer;transition:transform .15s}
+.pm-up:active{transform:scale(.97)}
+.pm-up:disabled{opacity:.55}
+.pm-up svg{width:18px;height:18px}
+.pm-up+.pm-i{margin-top:0}
+.pm-hint{margin:10px 0 0;font:400 13px/1.4 var(--nfont);color:#76767e}
+.ed{border-radius:18px;border:1px solid #232326;background:#000;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.ed:focus-within{border-color:rgba(var(--red-rgb),.55);box-shadow:0 0 0 3px rgba(var(--red-rgb),.10)}
+.ed-t{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0;padding:9px 12px;background:#000;border-bottom:1px solid #232326}
+.ed-t .pm-i{height:40px;margin:3px 0}
+.ed-g{display:flex;align-items:center}
+.ed-sp{width:1px;height:26px;background:#2a2a2e;margin:0 8px;flex:none}
+.ed-sel{flex:0 0 100%}
+.ed-btn{position:relative;width:34.5px;height:36px;border:0;border-radius:9px;background:none;color:#cfcfd5;display:grid;place-items:center;cursor:pointer;font:600 16px var(--nfont);transition:background .15s,color .15s}
+.ed-btn svg{width:18px;height:18px}
+.ed-btn:active{background:#222}
+.ed-btn.on{background:rgba(var(--red-rgb),.16);color:var(--red)}
+.ed-btn u,.ed-btn s,.ed-btn i,.ed-btn b{font-size:16px}
+.ed-btn i{font-family:Georgia,serif}
+.ed-a{display:flex;flex-direction:column;align-items:center;line-height:1}
+.ed-a em{font-style:normal;font-weight:600;font-size:16px}
+.ed-a span{display:block;width:17px;height:3px;border-radius:2px;margin-top:2px;background:linear-gradient(90deg,#ff3b30,#ffcc00,#34c759,#0a84ff,#bf5af2)}
+.ed-b{min-height:190px;max-height:340px;overflow-y:auto;padding:14px 16px;outline:0;font:400 16px/1.6 var(--nfont);color:#f3f3f4;overflow-wrap:anywhere}
+.ed-b:empty::before{content:attr(data-ph);color:#55555c;pointer-events:none}
+.ed-b p,.ed-b div{margin:0 0 6px}
+.ed-b ul,.ed-b ol{margin:4px 0 8px;padding-left:24px}
+.ed-b h1,.ed-b h2,.ed-b h3{margin:6px 0}
+.ed-c{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.pm-op{margin-bottom:12px;display:flex;flex-direction:column;gap:12px}
+.pm-opn{position:relative}
+.pm-opn .pm-i{padding-right:50px}
+.pm-opx{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:30px;height:30px;border:0;border-radius:9px;background:none;color:var(--red);display:grid;place-items:center;cursor:pointer}
+.pm-opx svg{width:16px;height:16px}
+.pm-add{display:block;width:100%;height:41px;border-radius:13px;border:1px solid #232326;background:#000;color:#a4a4ab;font:400 15.5px var(--nfont);cursor:pointer;transition:transform .15s,border-color .2s,color .2s}
+.pm-add:active{transform:scale(.985);border-color:var(--red);color:#fff}
+.pm-f{flex:none;display:flex;gap:12px;padding:14px 20px;border-top:1px solid #1f1f22}
+.pm-f button{flex:1;height:45px;border-radius:14px;font:600 17px var(--nfont);cursor:pointer;transition:transform .15s,filter .15s}
+.pm-f button:active{transform:scale(.98)}
+.pm-cancel{background:#1b1b1d;border:1px solid #2b2b2f;color:#fff}
+.pm-save{border:0;background:var(--red);color:#fff;box-shadow:0 4px 26px rgba(var(--red-rgb),.45)}
+.pm-save:disabled,.pm-cancel:disabled{opacity:.6;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.pm,.pm-card{transition:none}}
+
+/* ปุ่มเลือกภาษาในเมนูแอดมิน */
+.alang{margin:8px 0 2px;padding:10px 8px 6px;border-top:1px solid #1d1d1d}
+.alang-t{display:block;padding:0 6px 8px;font:500 12px var(--nfont);letter-spacing:.1em;color:#737373}
+.alang-g{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.alg{height:36px;border-radius:11px;border:1px solid #232323;background:#000;color:#a0a0a0;font:600 12.5px var(--nfont);letter-spacing:.04em;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.alg:active{opacity:.75}
+.alg.on{background:rgba(var(--red-rgb),.16);border-color:rgba(var(--red-rgb),.55);color:#fff}
+</style>
+<script>window.EX_NO_FETCH=true</script>
+<script src="data.js"></script>
+<script>window.EX_THEME_ADMIN=1</script>
+<script src="theme.js"></script>
+<script src="admin-i18n.js"></script>
+<script src="i18n.js"></script>
+<script src="admin-lang.js"></script>
+</head>
+<body>
+<div class="snack" id="snack" role="status" aria-live="polite"></div>
+<header id="hdr">
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="ເມນູ" aria-expanded="false" aria-controls="nav"><svg class="ic-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 7h14M5 12h14M5 17h14"/></svg><svg class="ic-x" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <h1>ຈັດການແຜງຮ້ານ</h1>
+  <span class="dot"></span>
+  <nav class="nav" id="nav" aria-label="ເມນູ">
+    <a class="nr nr-web" href="index.html"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M10 14L21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg><span>ໜ້າເວັບ</span></a>
+    <a class="nr nr-dash on" href="#top" id="goDash" aria-current="page"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM5.7 11.5a1.5 1.5 0 1 0 3.0 0a1.5 1.5 0 1 0 -3.0 0zM7.800000000000001 7.2a1.5 1.5 0 1 0 3.0 0a1.5 1.5 0 1 0 -3.0 0zM13.2 7.2a1.5 1.5 0 1 0 3.0 0a1.5 1.5 0 1 0 -3.0 0zM15.3 11.5a1.5 1.5 0 1 0 3.0 0a1.5 1.5 0 1 0 -3.0 0zM10 16a2 2 0 1 0 4 0a2 2 0 1 0 -4 0z"/></svg><span>Dashboard</span></a>
+    <div class="grp"><button class="nr" type="button" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><rect x="8" y="2.5" width="8" height="8" rx="1.6"/><rect x="2.5" y="12.5" width="8" height="8.5" rx="1.6"/><rect x="13.5" y="12.5" width="8" height="8.5" rx="1.6"/></svg><span>ສິນຄ້າ &amp; ໝວດໝູ່</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="gw"><div class="gi"><div class="sp"><button class="si" type="button" id="goProd"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M5 3h14a2 2 0 0 1 2 2v2.500H3V5a2 2 0 0 1 2-2zM4.500 9h15v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3zM10 12.200h4a.9.9 0 0 1 0 1.800h-4a.9.9 0 0 1 0-1.800z"/></svg><span>ຈັດການສິນຄ້າ &amp; ໝວດໝູ່</span></button><button class="si" type="button" onclick="location.href='admin-coupons.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2M13 17v2M13 11v2"/></svg><span>ຄູປອງ &amp; ໂຄ້ດຟຣີ</span></button><button class="si" type="button" onclick="location.href='admin-flash.html'"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2 4.5 13.5H11L9.8 22l9.7-12H13z"/></svg><span>Flash Sale</span></button><button class="si" type="button" onclick="location.href='admin-stock.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8v8a2 2 0 0 1-1 1.7l-7 4a2 2 0 0 1-2 0l-7-4A2 2 0 0 1 3 16V8a2 2 0 0 1 1-1.7l7-4a2 2 0 0 1 2 0l7 4A2 2 0 0 1 21 8z"/><path d="M12 8v8M8 12h8"/></svg><span>ເຕີມສະຕັອກ</span></button></div></div></div></div>
+    <div class="grp"><button class="nr" type="button" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7.5" r="3.2"/><circle cx="4.8" cy="9.5" r="2.4"/><circle cx="19.2" cy="9.5" r="2.4"/><path d="M5.8 19c0-3.3 2.8-5.5 6.2-5.5s6.2 2.2 6.2 5.5z"/><path d="M1.5 17c0-2.3 1.6-3.8 3.6-3.8.8 0 1.5.2 2 .6-1.2 1-1.9 2.3-2 3.9z"/><path d="M22.5 17c0-2.3-1.6-3.8-3.6-3.8-.8 0-1.5.2-2 .6 1.2 1 1.9 2.3 2 3.9z"/></svg><span>ສະມາຊິກ &amp; ລາຍການ</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="gw"><div class="gi"><div class="sp"><button class="si" type="button" onclick="location.href='admin-members.html'"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="8" r="4"/><path d="M1.800 20c0-3.600 3.200-6.200 7.200-6.200 1 0 1.900.2 2.800.5l-.6 5.700z"/><path fill-rule="evenodd" d="M18.300 12.600l.8.100.5 1.300 1.200.5 1.200-.7 1 1-.7 1.200.5 1.200 1.300.5v1.400l-1.300.5-.5 1.200.7 1.200-1 1-1.200-.7-1.200.5-.5 1.300h-1.400l-.5-1.300-1.200-.5-1.200.7-1-1 .7-1.200-.5-1.200-1.300-.5v-1.400l1.300-.5.5-1.200-.7-1.200 1-1 1.200.7 1.200-.5.5-1.300zM18 17a1.900 1.900 0 1 0 0 3.800 1.900 1.900 0 0 0 0-3.800z" transform="translate(-1.800 -4.200) scale(.92)"/></svg><span>ຈັດການສະມາຊິກ</span></button><button class="si" type="button" onclick="location.href='admin-agents.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.500 2.500a1 1 0 1 0 3-3l-3.880-3.880a3 3 0 0 0-4.240 0l-.88.880a1 1 0 1 1-3-3l2.810-2.810a5.790 5.790 0 0 1 7.060-.870l.470.280a2 2 0 0 0 1.420.250L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.500 6.500a1 1 0 1 0 3-3"/><path d="M3 4h8"/></svg><span>ຕົວແທນຈຳໜ່າຍ</span></button></div></div></div></div>
+    <div class="grp"><button class="nr" type="button" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H17a1.5 1.5 0 0 1 1.5 1.5V8H20a1.5 1.5 0 0 1 1.5 1.5v8A2.5 2.5 0 0 1 19 20H5.5A2.5 2.5 0 0 1 3 17.5zM17 13.2a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z"/></svg><span>ລະບົບຊຳລະເງິນ</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="gw"><div class="gi"><div class="sp"><button class="si" type="button" onclick="location.href='admin-topup.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h13v4"/><path d="M3 7v11a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-9a1 1 0 0 0-1-1H5a2 2 0 0 1-2-2Z"/></svg><span>ອະນຸມັດເຕີມເງິນ</span></button><button class="si" type="button" onclick="location.href='admin-payment.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3m4-3v.01M14 21h.01M17 21h4v-4"/></svg><span>QR ຊຳລະເງິນ</span></button></div></div></div></div>
+    <div class="grp"><button class="nr" type="button" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M9 2.5v4.5M15 2.5v4.5M12 17.5v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5.5 7h13v3.5a6.5 6.5 0 0 1-13 0z"/></svg><span>ເຊື່ອມຕໍ່ API</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="gw"><div class="gi"><div class="sp"><button class="si" type="button" onclick="location.href='admin-webhook.html'"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M5 5.600Q8.200 3.700 12 3.500q3.800.2 7 2.100 2.700 4.100 3 11-2.600 2.200-5.800 3l-1.200-1.900H9L7.800 19.600q-3.200-.8-5.800-3 .3-6.900 3-11zM8.800 10.300a1.900 1.900 0 1 0 0 3.800 1.900 1.900 0 0 0 0-3.800zM15.200 10.300a1.900 1.900 0 1 0 0 3.800 1.900 1.900 0 0 0 0-3.800z"/></svg><span>Webhook Discord</span></button></div></div></div></div>
+    <div class="grp"><button class="nr" type="button" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 5h-8M9 5H3M21 12h-3M14 12H3M21 19h-9M8 19H3"/><path d="M11 3v4M16 10v4M10 17v4"/></svg><span>ຕັ້ງຄ່າທົ່ວໄປ</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="gw"><div class="gi"><div class="sp"><button class="si" type="button" onclick="location.href='admin-settings.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg><span>ຕັ້ງຄ່າເວັບໄຊ</span></button></div></div></div></div>
+    <div class="grp"><button class="nr" type="button" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg><span>ຄູ່ມືສອນໃຊ້ງານ</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="gw"><div class="gi"><div class="sp"><button class="si" type="button" onclick="location.href='admin-guide.html'"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>ພາບລວມທຸກໜ້າ</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#products'"><span class="gn">1</span><span>ຈັດການສິນຄ້າ &amp; ໝວດໝູ່</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#stock'"><span class="gn">4</span><span>ເຕີມສະຕັອກ</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#members'"><span class="gn">5</span><span>ຈັດການສະມາຊິກ</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#agents'"><span class="gn">6</span><span>ຕົວແທນຈຳໜ່າຍ</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#topup'"><span class="gn">7</span><span>ອະນຸມັດເຕີມເງິນ</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#payment'"><span class="gn">8</span><span>QR ຊຳລະເງິນ</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#webhook'"><span class="gn">9</span><span>Webhook Discord</span></button><button class="si" type="button" onclick="location.href='admin-guide.html#settings'"><span class="gn">10</span><span>ຕັ້ງຄ່າເວັບໄຊ</span></button></div></div></div></div>
+  <div class='alang' role='radiogroup' aria-label='ພາສາ'><span class='alang-t'>ພາສາ</span><div class='alang-g'><button class='alg' type='button' role='radio' aria-checked='false' data-lang='lo'>LA</button><button class='alg' type='button' role='radio' aria-checked='false' data-lang='th'>TH</button><button class='alg' type='button' role='radio' aria-checked='false' data-lang='en'>EN</button><button class='alg' type='button' role='radio' aria-checked='false' data-lang='vi'>VN</button><button class='alg' type='button' role='radio' aria-checked='false' data-lang='hi'>IN</button><button class='alg' type='button' role='radio' aria-checked='false' data-lang='pt'>BR</button></div></div>
+  </nav>
+</header>
+<main>
+  <div id="saleMount"></div>
+    <div class="view" id="vDash">
+<div class="crumb">ແຜງຄວບຄຸມລະບົບ / ພາບລວມລະບົບ / ລາຍໄດ້ສະສົມ</div>
+<div class="pinsw" id="pinSw">
+  <div class="pinsw-t"><b>ລະຫັດ PIN ເຂົ້າແຜງ</b><span id="pinSwTxt">ໃສ່ທຸກຄັ້ງທີ່ເຂົ້າ</span></div>
+  <button type="button" class="pinsw-b" id="pinSwBtn" role="switch" aria-checked="true" aria-label="ໃສ່ PIN ທຸກຄັ້ງທີ່ເຂົ້າ"><i></i></button>
+</div>
+<div class="pinsw">
+  <div class="pinsw-t"><b>ປ່ຽນລະຫັດ PIN</b><span>ຕ້ອງໃສ່ PIN ເກົ່າ ແລ້ວຕັ້ງ PIN ໃໝ່ 6 ຫຼັກ</span></div>
+  <button type="button" class="pc-open" id="pcOpen">ປ່ຽນ</button>
+</div>
+<div class="pc-bg" id="pcBg" hidden>
+  <form class="pc-box" id="pcForm" autocomplete="off">
+    <h3>ປ່ຽນລະຫັດ PIN</h3>
+    <label>PIN ເກົ່າ<input id="pcOld" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off"></label>
+    <label>PIN ໃໝ່ (6 ຫຼັກ)<input id="pcNew" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off"></label>
+    <label>ຢືນຢັນ PIN ໃໝ່<input id="pcNew2" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off"></label>
+    <p class="pc-msg" id="pcMsg" aria-live="polite"></p>
+    <div class="pc-row"><button type="button" class="pc-cancel" id="pcCancel">ຍົກເລີກ</button><button type="submit" class="pc-ok" id="pcOk">ບັນທຶກ</button></div>
+  </form>
+</div>
+<style>
+.pc-open{flex:none;height:34px;padding:0 18px;border-radius:99px;border:1px solid var(--redline);background:var(--redsoft);color:var(--red);font:inherit;font-weight:600;cursor:pointer}
+.pc-bg{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:16px;background:rgba(0,0,0,.7)}
+.pc-bg[hidden]{display:none}
+.pc-box{width:min(360px,100%);display:flex;flex-direction:column;gap:12px;padding:20px;border-radius:22px;background:var(--card);border:1px solid var(--redline);color:var(--text)}
+.pc-box h3{font-size:17px}
+.pc-box label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+.pc-box input{height:44px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text);font:inherit;font-size:18px;letter-spacing:6px;text-align:center}
+.pc-box input:focus{outline:none;border-color:var(--red)}
+.pc-msg{min-height:18px;font-size:13px;color:var(--red)}
+.pc-msg.ok{color:#2fbf71}
+.pc-row{display:flex;gap:10px}
+.pc-row button{flex:1;height:44px;border-radius:12px;font:inherit;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text)}
+.pc-row .pc-ok{background:var(--red);border-color:var(--red);color:#fff}
+.pc-row button:disabled{opacity:.6}
+.pinsw{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 14px;padding:14px 17px;border-radius:22px;background:var(--card);border:1px solid var(--border)}
+.pinsw-t{display:flex;flex-direction:column;gap:3px;min-width:0}
+.pinsw-t b{font-size:14.5px;font-weight:600}
+.pinsw-t span{font-size:12.5px;color:var(--muted)}
+.pinsw-b{flex:none;position:relative;width:52px;height:30px;border-radius:99px;border:1px solid var(--border);background:#555;cursor:pointer;padding:0;transition:background .25s,box-shadow .25s;-webkit-tap-highlight-color:transparent}
+.pinsw-b i{position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .25s}
+.pinsw-b[aria-checked="true"]{background:var(--red);box-shadow:0 0 14px rgba(var(--red-rgb),.45)}
+.pinsw-b[aria-checked="true"] i{transform:translateX(22px)}
+</style>
+<script>
+(function(){
+  var b=document.getElementById('pinSwBtn'),t=document.getElementById('pinSwTxt');
+  function get(){try{return localStorage.getItem('exPinMode')!=='once'}catch(e){return true}}
+  function show(on){b.setAttribute('aria-checked',on?'true':'false');t.textContent=on?'ໃສ່ທຸກຄັ້ງທີ່ເຂົ້າ':'ໃສ່ຄັ້ງດຽວ (ຈື່ໄວ້ 30 ນາທີ)'}
+  show(get());
+  b.addEventListener('click',function(){var on=!get();try{localStorage.setItem('exPinMode',on?'every':'once')}catch(e){}show(on)});
+})();
+</script>
+<script>
+(function(){
+  var SB={url:'https://awufvxxaitzkgdrzjzhf.supabase.co',key:'sb_publishable_i6vz65Yt1dZdT0CZQM4WoA_3crocHCg'};
+  var $=function(i){return document.getElementById(i)};
+  var bg=$('pcBg'),o=$('pcOld'),n=$('pcNew'),n2=$('pcNew2'),msg=$('pcMsg'),ok=$('pcOk'),busy=false;
+  function tok(){try{return localStorage.getItem('exSession')||sessionStorage.getItem('exSession')||''}catch(e){return ''}}
+  function say(t,good){msg.textContent=t||'';msg.className='pc-msg'+(good?' ok':'')}
+  function open(){o.value=n.value=n2.value='';say('');bg.hidden=false;setTimeout(function(){o.focus()},50)}
+  function close(){bg.hidden=true}
+  $('pcOpen').addEventListener('click',open);
+  $('pcCancel').addEventListener('click',close);
+  bg.addEventListener('click',function(e){if(e.target===bg)close()});
+  [o,n,n2].forEach(function(i){i.addEventListener('input',function(){i.value=i.value.replace(/\D/g,'').slice(0,6)})});
+  $('pcForm').addEventListener('submit',function(e){
+    e.preventDefault(); if(busy) return;
+    if(!/^\d{6}$/.test(o.value)) return say('ກະລຸນາໃສ່ PIN ເກົ່າ 6 ຫຼັກ');
+    if(!/^\d{6}$/.test(n.value)) return say('PIN ໃໝ່ຕ້ອງເປັນຕົວເລກ 6 ຫຼັກ');
+    if(n.value!==n2.value) return say('PIN ໃໝ່ທັງສອງຊ່ອງບໍ່ຕົງກັນ');
+    if(n.value===o.value) return say('PIN ໃໝ່ຕ້ອງບໍ່ຊ້ຳກັບ PIN ເກົ່າ');
+    busy=true; ok.disabled=true; say('ກຳລັງບັນທຶກ...');
+    var ctl=new AbortController(),t=setTimeout(function(){ctl.abort()},15000);
+    fetch(SB.url+'/rest/v1/rpc/adm_pin_set',{method:'POST',signal:ctl.signal,headers:{'Content-Type':'application/json',apikey:SB.key,Authorization:'Bearer '+SB.key},body:JSON.stringify({p_token:tok(),p_new:n.value,p_old:o.value})})
+    .then(function(r){return r.json().catch(function(){return null})}).then(function(r){
+      if(r&&r.ok){say('ປ່ຽນ PIN ສຳເລັດ ✓',true);setTimeout(close,1200);return}
+      var c=r&&r.code;
+      if(c==='weak_pin') say('PIN ງ່າຍເກີນໄປ (ເຊັ່ນ 123456 ຫຼື 111111)');
+      else if(c==='locked'||(r&&r.retry_sec>0)) say('ລອງຜິດຫຼາຍເກີນໄປ ລໍຖ້າ '+(r.retry_sec||30)+' ວິນາທີ');
+      else if(c==='not_admin') say('ເຊດຊັນໝົດອາຍຸ ກະລຸນາເຂົ້າສູ່ລະບົບໃໝ່');
+      else if(c==='bad_format') say('ຮູບແບບ PIN ບໍ່ຖືກຕ້ອງ');
+      else say('PIN ເກົ່າບໍ່ຖືກຕ້ອງ'+(r&&r.left!=null?' (ເຫຼືອ '+r.left+' ຄັ້ງ)':''));
+    },function(){say('ເຊື່ອມຕໍ່ບໍ່ໄດ້ ລອງໃໝ່ອີກຄັ້ງ')}).finally(function(){clearTimeout(t);busy=false;ok.disabled=false});
+  });
+})();
+</script>
+  <div class="note" id="note" hidden></div>
+
+  <section class="adm">
+    <div class="adm-top">
+      <div class="adm-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M11 3.2a9 9 0 1 0 9.8 9.8H11z"/><path d="M13.2 2.2a9 9 0 0 1 8.6 8.6h-8.6z"/></svg></div>
+      <div><div class="adm-lbl"><i></i>Admin Dashboard</div><h2 class="adm-title">ພາບລວມສະຖິຕິລາຍໄດ້</h2></div>
+    </div>
+    <div class="adm-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.5-4.2L3 9.5"/><path d="M3 4v5.5h5.5"/><path d="M4 13a8 8 0 0 0 14.5 4.2L21 14.5"/><path d="M21 20v-5.5h-5.5"/></svg><span>ຍອດມື້ນີ້: <span id="vToday">₭0</span></span></div>
+  </section>
+
+  <div class="stats">
+    <div class="st c-red">
+      <div class="st-h"><span class="st-t">ສະມາຊິກທັງໝົດ</span><span class="st-i"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="7.5" r="3.2"/><circle cx="4.8" cy="9.5" r="2.4"/><circle cx="19.2" cy="9.5" r="2.4"/><path d="M5.8 19c0-3.3 2.8-5.5 6.2-5.5s6.2 2.2 6.2 5.5z"/><path d="M1.5 17c0-2.3 1.6-3.8 3.6-3.8.8 0 1.5.2 2 .6-1.2 1-1.9 2.3-2 3.9z"/><path d="M22.5 17c0-2.3-1.6-3.8-3.6-3.8-.8 0-1.5.2-2 .6 1.2 1 1.9 2.3 2 3.9z"/></svg></span></div>
+      <div class="st-v" id="vMembers">1 ຄົນ</div><div class="st-s" id="vMembersToday">ມື້ນີ້ເພີ່ມ +1 ຄົນ</div>
+    </div>
+    <div class="st c-blue">
+      <div class="st-h"><span class="st-t">ສິນຄ້າທີ່ຂາຍແລ້ວ</span><span class="st-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span></div>
+      <div class="st-v" id="vSold">0 ຊິ້ນ</div><div class="st-s" id="vSoldToday">ມື້ນີ້ 0 ຊິ້ນ</div>
+    </div>
+    <div class="st c-pur">
+      <div class="st-h"><span class="st-t">ຍອດຂາຍສິນຄ້າສະສົມ</span><span class="st-i"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 8V7a3.5 3.5 0 0 1 7 0v1h2.2c.8 0 1.5.7 1.5 1.5v9c0 1.4-1.1 2.5-2.5 2.5H7.3c-1.4 0-2.5-1.1-2.5-2.5v-9c0-.8.7-1.5 1.5-1.5zm2 0h3V7a1.5 1.5 0 0 0-3 0z"/></svg></span></div>
+      <div class="st-v" id="vSales">₭0</div><div class="st-s">ຍອດຂາຍສິນຄ້າທັງໝົດ</div>
+    </div>
+    <div class="st c-amb">
+      <div class="st-h"><span class="st-t">ລູກຄ້າເຕີມເງິນທັງໝົດ</span><span class="st-i"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H17a1.5 1.5 0 0 1 1.5 1.5V8H20a1.5 1.5 0 0 1 1.5 1.5v8A2.5 2.5 0 0 1 19 20H6.5A2.5 2.5 0 0 1 4 17.5zM17 13.2a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6z"/></svg></span></div>
+      <div class="st-v" id="vTopup">₭0</div><div class="st-s">ບໍ່ນັບຍອດແອດມິນ</div>
+    </div>
+  </div>
+  <section class="tr" id="trCard">
+    <div class="tr-h">
+      <div class="tr-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+      <div><h3 class="tr-t">ແນວໂນ້ມຍອດເຕີມເງິນ</h3><p class="tr-s">ກຣາຟວິເຄາະປະລິມານທຸລະກຳຕາມຊ່ວງເວລາ</p></div>
+    </div>
+    <div class="tr-tabs" id="trTabs" role="tablist">
+      <button class="tr-tab on" type="button" role="tab" aria-selected="true" data-r="day">ມື້ນີ້</button>
+      <button class="tr-tab" type="button" role="tab" aria-selected="false" data-r="week">ອາທິດນີ້</button>
+      <button class="tr-tab" type="button" role="tab" aria-selected="false" data-r="month">ເດືອນນີ້</button>
+      <button class="tr-tab" type="button" role="tab" aria-selected="false" data-r="year">ປີນີ້</button>
+    </div>
+    <div class="tr-chart" id="trChart"><div id="trSvg"></div><div class="tr-tip" id="trTip"></div></div>
+  </section>
+  <section class="cf" id="cfCard">
+    <div class="cf-h">
+      <div class="cf-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M7.8 12.3l2.7 2.7 5.7-5.9"/></svg></div>
+      <div><h3 class="cf-t">ຢືນຢັນເຕີມເງິນ</h3><p class="cf-s">ລາຍການລໍຖ້າອະນຸມັດ ກົດຢືນຢັນໄດ້ທັນທີ</p></div>
+      <span class="cf-n z" id="cfN">0</span>
+    </div>
+    <div class="cf-l" id="cfList"><div class="cf-e">ກຳລັງໂຫຼດ...</div></div>
+  </section>
+  <div class="cf-ov" id="cfOv"><b>✕</b><img id="cfImg" alt="slip"></div>
+  </div>
+  <div class="view" id="vProd" hidden>
+    <div class="tabs" id="tabs" role="tablist">
+      <span class="tab-ind no-anim" id="tabInd"></span>
+      <button class="tab on" type="button" role="tab" aria-selected="true" data-pane="pp"><svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M5 3h14a2 2 0 0 1 2 2v2.500H3V5a2 2 0 0 1 2-2zM4.500 9h15v9a3 3 0 0 1-3 3h-9a3 3 0 0 1-3-3zM10 12.200h4a.9.9 0 0 1 0 1.800h-4a.9.9 0 0 1 0-1.800z"/></svg><span>ຈັດການສິນຄ້າ</span></button>
+      <button class="tab" type="button" role="tab" aria-selected="false" data-pane="pc"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="8.500" y="2.500" width="7" height="6" rx="1.200"/><rect x="1.500" y="15.500" width="7" height="6" rx="1.200"/><rect x="8.500" y="15.500" width="7" height="6" rx="1.200"/><rect x="15.500" y="15.500" width="7" height="6" rx="1.200"/><path d="M12 8.500v3.500M5 15.500V12h14v3.500M12 12v3.500" fill="none" stroke="currentColor" stroke-width="1.900" stroke-linecap="round" stroke-linejoin="round"/></svg><span>ຈັດການໝວດໝູ່</span></button>
+    </div>
+    <div class="pane on" id="pp">
+      <label class="srch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20.500 20.500-4.500-4.500"/></svg><input type="search" id="qP" placeholder="ຄົ້ນຫາຊື່ສິນຄ້າ..." autocomplete="off"></label>
+      <button class="addb" type="button" id="addProd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span>ເພີ່ມສິນຄ້າ</span></button>
+      <div class="chips"><button class="chip" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="3" y="3" width="7.500" height="7.500" rx="1.600"/><rect x="13.500" y="3" width="7.500" height="7.500" rx="1.600"/><rect x="3" y="13.500" width="7.500" height="7.500" rx="1.600"/><rect x="13.500" y="13.500" width="7.500" height="7.500" rx="1.600"/></svg><span id="pChipN">ທັງໝົດ (0)</span></button></div>
+      <div class="plist" id="pList"></div>
+      <div class="empty-l">— ກຳລັງໂຫຼດ... —</div>
+    </div>
+    <div class="pane" id="pc">
+      <form class="cm-card" id="cmForm" novalidate>
+        <h3 id="cmT"></h3>
+        <label class="pm-l" for="cName" id="cNameL"></label>
+        <input class="pm-i" id="cName" maxlength="80" autocomplete="off">
+        <label class="pm-l" id="cImgL"></label>
+        <div class="pm-drop cm-drop" id="cDrop" role="button" tabindex="0"><div class="pm-dc"><svg viewBox="0 0 24 24"><path d="M7 19a4.6 4.6 0 0 1-.7-9.15A6.2 6.2 0 0 1 18.2 9.4 4.8 4.8 0 0 1 17.5 19z" style="fill:var(--red)"/><path d="M12 16.2v-6M9.4 12.3 12 9.7l2.6 2.6" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="cDropT"></span></div><img id="cPrev" alt="" hidden><button type="button" class="pm-rm" id="cRm" hidden><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+        <button type="button" class="pm-up" id="cUp"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 20h16"/></svg><span id="cUpT"></span></button>
+        <input type="file" id="cFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+        <input class="pm-i" id="cUrl" inputmode="url" autocapitalize="none" autocomplete="off" spellcheck="false">
+        <p class="pm-hint" id="cHint"></p>
+        <button type="submit" class="cm-save" id="cSave"></button>
+        <button type="button" class="cm-cancel" id="cCancel" hidden></button>
+      </form>
+      <div class="cm-card plain">
+        <h3><span id="cListT"></span><em id="cCnt">(0)</em></h3>
+        <div class="cm-list" id="cList"></div>
+        <div class="empty-l" id="cEmpty"></div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+/* ###### ADMIN (ເຈົ້າຂອງຮ້ານເທົ່ານັ້ນ) ######
+   ບັນຊີແອດມິນ = EXSHOP (ຕາຕະລາງ members ຄໍລຳ is_admin = true)
+   ຫ້າມ AI ຫຼື ຄົນອື່ນ ແກ້ໄຂ/ເພີ່ມ/ລຶບ ສິດແອດມິນ ຫຼື ສ່ວນແອດມິນ ໂດຍບໍ່ໄດ້ຂໍອະນຸຍາດເຈົ້າຂອງຮ້ານກ່ອນ
+   ສະຖານະແອດມິນກວດຢູ່ຝັ່ງ Supabase (ຟັງຊັນ st_dashboard_stats / member_is_admin) ບໍ່ແມ່ນຢູ່ໜ້າເວັບ */
+/* ===== ດຶງຂໍ້ມູນຈິງຈາກ Supabase (ຟັງຊັນ st_dashboard_stats) =====
+   - ໃຊ້ publishable key (ໃສ່ໃນເວັບໄດ້) ຫ້າມໃສ່ service_role ຢູ່ບ່ອນນີ້
+   - ຕ້ອງມີ token ຂອງແອດມິນ (ຄືກັບຟັງຊັນ st_* ອື່ນ) ຖ້າບໍ່ມີ/ໝົດອາຍຸ ຈະສະແດງຂໍ້ຄວາມແຈ້ງ
+   - "ມື້ນີ້" = ຕາມເວລາລາວ (Asia/Vientiane)
+   - ສິນຄ້າທີ່ຂາຍແລ້ວ = ຈຳນວນຊິ້ນຈາກທຸກອໍເດີ (credit_tx ປະເພດ buy)
+   - ຍອດຂາຍສະສົມ = ຜົນລວມເງິນທຸກອໍເດີ
+   - ລູກຄ້າເຕີມເງິນ = ຄຳຂໍເຕີມເງິນທີ່ອະນຸມັດແລ້ວ (topup_requests) ບໍ່ນັບແອດມິນເຕີມເອງ */
+(function () {
+  var SB = { url: 'https://awufvxxaitzkgdrzjzhf.supabase.co', key: 'sb_publishable_i6vz65Yt1dZdT0CZQM4WoA_3crocHCg' };
+  var TOKEN_KEY = 'exSession'; /* ປ່ຽນບ່ອນນີ້ ຖ້າລະບົບແອດມິນເກັບ token ໄວ້ໃນຊື່ອື່ນ */
+  var IDS = ['vToday', 'vMembers', 'vMembersToday', 'vSold', 'vSoldToday', 'vSales', 'vTopup'];
+  var $ = function (id) { return document.getElementById(id); };
+  var nf = new Intl.NumberFormat('en-US');
+  var money = function (n) { return '\u20ad' + nf.format(Number(n) || 0); };
+  var running = false;
+
+  function tok() {
+    try {
+      if (window.exToken) return window.exToken();
+      return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || '';
+    } catch (e) { return ''; }
+  }
+  function note(t) { var n = $('note'); if (!t) { n.hidden = true; return; } n.textContent = t; n.hidden = false; }
+  function busy(on) {
+    IDS.forEach(function (i) { var e = $(i); if (e) e.parentNode.classList.toggle('ld', on); });
+  }
+  function fill(d) {
+    $('vToday').textContent = money(d.sales_today);
+    $('vMembers').textContent = nf.format(d.members_total) + ' ຄົນ';
+    $('vMembersToday').textContent = 'ມື້ນີ້ເພີ່ມ +' + nf.format(d.members_today) + ' ຄົນ';
+    $('vSold').textContent = nf.format(d.sold_total) + ' ຊິ້ນ';
+    $('vSoldToday').textContent = 'ມື້ນີ້ ' + nf.format(d.sold_today) + ' ຊິ້ນ';
+    $('vSales').textContent = money(d.sales_total);
+    $('vTopup').textContent = money(d.topup_total);
+  }
+  function load() {
+    if (running) return;
+    var t = tok();
+    if (!t) { note('ກະລຸນາເຂົ້າສູ່ລະບົບແອດມິນກ່ອນ ເພື່ອເບິ່ງຂໍ້ມູນຈິງ'); return; }
+    running = true; busy(true);
+    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 15000);
+    fetch(SB.url + '/rest/v1/rpc/st_dashboard_stats', {
+      method: 'POST', signal: ctl.signal,
+      headers: { 'Content-Type': 'application/json', apikey: SB.key, Authorization: 'Bearer ' + SB.key },
+      body: JSON.stringify({ p_token: t })
+    })
+    .then(function (r) {
+      return r.json().catch(function () { return null; }).then(function (j) {
+        if (!r.ok) throw new Error('http ' + r.status);
+        return j;
+      });
+    })
+    .then(function (d) {
+      if (d && d.code === 'not_admin') { note('ບັນຊີນີ້ບໍ່ແມ່ນແອດມິນ'); return; }
+      if (!d || !d.ok) { note('ເຊດຊັນໝົດອາຍຸ ຫຼື ບໍ່ຖືກຕ້ອງ ກະລຸນາເຂົ້າສູ່ລະບົບໃໝ່'); return; }
+      note(''); fill(d);
+    })
+    .catch(function () { note('ໂຫຼດຂໍ້ມູນບໍ່ໄດ້ ກະລຸນາລອງໃໝ່ (ແຕະປຸ່ມ "ຍອດມື້ນີ້")'); })
+    .finally(function () { clearTimeout(to); running = false; busy(false); });
+  }
+  document.querySelector('.adm-pill').addEventListener('click', load);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+  setInterval(load, 60000);
+  /* กั้นหน้า: ไม่ใช่แอดมิน → เด้งกลับหน้าแรก (ข้อมูลจริงถูกกั้นฝั่งเซิร์ฟเวอร์อีกชั้นอยู่แล้ว) */
+  function gate() {
+    var root = document.documentElement, t = tok();
+    if (!t) { try { sessionStorage.setItem('exNext', 'admin.html'); } catch (e) {} location.replace('index.html?auth=login'); return; }
+    fetch(SB.url + '/rest/v1/rpc/member_is_admin', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SB.key, Authorization: 'Bearer ' + SB.key },
+      body: JSON.stringify({ p_token: t })
+    })
+    .then(function (r) { return r.json(); })
+    .then(function (j) {
+      if (j && j.ok && j.admin) { root.classList.remove('chk'); load(); }
+      else location.replace('index.html');
+    })
+    .catch(function () { root.classList.remove('chk'); load(); });
+  }
+  gate();
+})();
+</script>
+<script>
+/* ===== ແນວໂນ້ມຍອດເຕີມເງິນ — ດຶງຈາກ Supabase ຟັງຊັນ st_topup_trend (ໃຊ້ token ແອດມິນ ຄືກັບ st_dashboard_stats) =====
+   ນັບຄຳຂໍເຕີມເງິນທີ່ອະນຸມັດແລ້ວ (topup_requests) ຕາມເວລາລາວ (Asia/Vientiane)
+   ມື້ນີ້ = ທຸກ 3 ຊົ່ວໂມງ · ອາທິດນີ້ = ລາຍວັນ · ເດືອນນີ້ = ລາຍວັນ · ປີນີ້ = ລາຍເດືອນ */
+(function () {
+  var SB = { url: 'https://awufvxxaitzkgdrzjzhf.supabase.co', key: 'sb_publishable_i6vz65Yt1dZdT0CZQM4WoA_3crocHCg' };
+  var TOKEN_KEY = 'exSession';
+  var box = document.getElementById('trChart'), svgBox = document.getElementById('trSvg'),
+      tip = document.getElementById('trTip'), tabs = document.getElementById('trTabs');
+  if (!box || !tabs) return;
+  var rng = 'day', data = null, seq = 0;
+  var nf = new Intl.NumberFormat('en-US');
+  function tok() {
+    try { if (window.exToken) return window.exToken(); return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || ''; }
+    catch (e) { return ''; }
+  }
+  function p2(n) { return (n < 10 ? '0' : '') + n; }
+  function iso(d) { return d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate()) + 'T' + p2(d.getHours()) + ':00'; }
+  /* ກຣາຟເປົ່າ (ຍອດ 0) ສະແດງທັນທີ ກ່ອນຂໍ້ມູນຈິງມາ */
+  function blank(r) {
+    var now = new Date(), L = [], V = [], i, n, d;
+    if (r === 'week') {
+      var dow = (now.getDay() + 6) % 7; d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - dow);
+      for (i = 0; i < 7; i++) { L.push(iso(new Date(d.getFullYear(), d.getMonth(), d.getDate() + i))); V.push(0); }
+    } else if (r === 'month') {
+      n = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      for (i = 1; i <= n; i++) { L.push(iso(new Date(now.getFullYear(), now.getMonth(), i))); V.push(0); }
+    } else if (r === 'year') {
+      for (i = 0; i < 12; i++) { L.push(iso(new Date(now.getFullYear(), i, 1))); V.push(0); }
+    } else {
+      for (i = 0; i < 8; i++) { L.push(iso(new Date(now.getFullYear(), now.getMonth(), now.getDate(), i * 3))); V.push(0); }
+    }
+    return { range: r, labels: L, values: V };
+  }
+  function lab(r, s) {
+    if (r === 'day') return s.substr(11, 5);
+    if (r === 'week') return s.substr(8, 2) + '/' + s.substr(5, 2);
+    if (r === 'month') return String(parseInt(s.substr(8, 2), 10));
+    return s.substr(5, 2);
+  }
+  function short(n) {
+    if (n >= 1e9) return (Math.round(n / 1e8) / 10) + 'B';
+    if (n >= 1e6) return (Math.round(n / 1e5) / 10) + 'M';
+    if (n >= 1e3) return (Math.round(n / 1e2) / 10) + 'K';
+    return String(Math.round(n * 10) / 10);
+  }
+  function niceTop(max) {
+    if (!(max > 0)) return 10;
+    var raw = max / 5, mag = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), nm = raw / mag;
+    var s = nm <= 1 ? 1 : nm <= 2 ? 2 : nm <= 2.5 ? 2.5 : nm <= 5 ? 5 : 10;
+    return s * mag * 5;
+  }
+  function render() {
+    var d = data || blank(rng), L = d.labels || [], V = (d.values || []).map(Number), n = L.length;
+    if (!n) return;
+    var W = box.clientWidth || 340, H = 118, PL = 26, PR = W - 5, PT = 8, PB = H - 16;
+    var top = niceTop(Math.max.apply(null, V.concat([0])));
+    var s = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="trend">', i, y, x;
+    for (i = 0; i <= 5; i++) {
+      y = PT + (PB - PT) * i / 5;
+      s += '<line class="tr-g" x1="' + PL + '" x2="' + PR + '" y1="' + y.toFixed(1) + '" y2="' + y.toFixed(1) + '"/>';
+      s += '<text x="' + (PL - 5) + '" y="' + (y + 2.2).toFixed(1) + '" text-anchor="end">\u20ad' + short(top - top * i / 5) + '</text>';
+    }
+    var step = n > 12 ? Math.ceil(n / 8) : 1, pts = [], path = '';
+    for (i = 0; i < n; i++) {
+      x = n > 1 ? PL + (PR - PL) * i / (n - 1) : (PL + PR) / 2;
+      y = PB - (PB - PT) * Math.min(V[i] || 0, top) / top;
+      pts.push([x, y]);
+      path += (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+      if (i % step === 0) s += '<text x="' + x.toFixed(1) + '" y="' + (H - 3) + '" text-anchor="middle">' + lab(d.range || rng, L[i]) + '</text>';
+    }
+    s += '<path class="tr-l" pathLength="1" d="' + path + '"/>';
+    var r = n > 12 ? 2 : 3;
+    for (i = 0; i < n; i++) {
+      s += '<circle class="tr-p" cx="' + pts[i][0].toFixed(1) + '" cy="' + pts[i][1].toFixed(1) + '" r="' + r + '"/>';
+      s += '<circle class="tr-hit" data-i="' + i + '" cx="' + pts[i][0].toFixed(1) + '" cy="' + pts[i][1].toFixed(1) + '" r="10"/>';
+    }
+    svgBox.innerHTML = s + '</svg>';
+    tip.classList.remove('on');
+    svgBox._pts = pts; svgBox._v = V; svgBox._l = L;
+  }
+  svgBox.addEventListener('click', function (e) {
+    var t = e.target; if (!t || !t.getAttribute || t.getAttribute('class') !== 'tr-hit') { tip.classList.remove('on'); return; }
+    var i = +t.getAttribute('data-i'), p = svgBox._pts[i];
+    tip.textContent = '\u20ad' + nf.format(svgBox._v[i] || 0) + ' \u00b7 ' + lab(data ? data.range : rng, svgBox._l[i]);
+    var w = box.clientWidth, x = Math.max(40, Math.min(w - 40, p[0]));
+    tip.style.left = x + 'px'; tip.style.top = p[1] + 'px'; tip.classList.add('on');
+  });
+  function load() {
+    var t = tok(); if (!t) return;
+    var my = ++seq, ask = rng;
+    box.classList.add('ld');
+    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 15000);
+    fetch(SB.url + '/rest/v1/rpc/st_topup_trend', {
+      method: 'POST', signal: ctl.signal,
+      headers: { 'Content-Type': 'application/json', apikey: SB.key, Authorization: 'Bearer ' + SB.key },
+      body: JSON.stringify({ p_token: t, p_range: ask })
+    })
+    .then(function (r) { return r.json().catch(function () { return null; }); })
+    .then(function (j) {
+      if (my !== seq || !j || !j.ok || !j.labels) return;
+      data = { range: j.range, labels: j.labels, values: j.values }; render();
+    })
+    .catch(function () {})
+    .finally(function () { clearTimeout(to); if (my === seq) box.classList.remove('ld'); });
+  }
+  tabs.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.tr-tab'); if (!b || b.dataset.r === rng) return;
+    Array.prototype.forEach.call(tabs.children, function (x) { var on = x === b; x.classList.toggle('on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+    rng = b.dataset.r; data = null; render(); load();
+  });
+  window.addEventListener('resize', render);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+  document.addEventListener('exrefresh', load);
+  setInterval(load, 60000);
+  render(); load();
+})();
+</script>
+<script>
+/* ===== ຢືນຢັນເຕີມເງິນ — ໃຊ້ຟັງຊັນເດີມຂອງໜ້າ admin-topup: adm_topup_list / adm_topup_slip / adm_topup_review (ກວດສິດແອດມິນຝັ່ງ Supabase) ===== */
+(function () {
+  var SB = { url: 'https://awufvxxaitzkgdrzjzhf.supabase.co', key: 'sb_publishable_i6vz65Yt1dZdT0CZQM4WoA_3crocHCg' };
+  var TOKEN_KEY = 'exSession';
+  var list = document.getElementById('cfList'), cnt = document.getElementById('cfN'),
+      ov = document.getElementById('cfOv'), img = document.getElementById('cfImg');
+  if (!list) return;
+  var busy = false, tt, nf = new Intl.NumberFormat('en-US');
+  var fmt = function (n) { return '\u20ad' + nf.format(Number(n) || 0); };
+  var BANK = { bcel:'BCEL', ldb:'LDB', jdb:'JDB', apb:'APB', lvb:'LVB', stb:'STB', psvb:'PSVB', idcb:'IDCB', acleda:'ACLEDA', mjbl:'MJBL', bic:'BIC', vtb:'VietinBank', vcb:'Vietcombank', bfl:'BFL', icbc:'ICBC', boc:'BOC', pbl:'Public Bank', lcnb:'LCNB' };
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function tok() {
+    try { if (window.exToken) return window.exToken(); return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || ''; }
+    catch (e) { return ''; }
+  }
+  function toast(m) {
+    var sn = document.getElementById('snack'); if (!sn) return;
+    sn.textContent = m; sn.classList.add('show'); clearTimeout(tt);
+    tt = setTimeout(function () { sn.classList.remove('show'); }, 2600);
+  }
+  function rpc(name, body) {
+    var ctl = new AbortController(), to = setTimeout(function () { ctl.abort(); }, 15000);
+    return fetch(SB.url + '/rest/v1/rpc/' + name, {
+      method: 'POST', signal: ctl.signal,
+      headers: { 'Content-Type': 'application/json', apikey: SB.key, Authorization: 'Bearer ' + SB.key },
+      body: JSON.stringify(body)
+    }).then(function (r) { return r.json().catch(function () { return null; }); })
+      .finally(function () { clearTimeout(to); });
+  }
+  function render(rows) {
+    cnt.textContent = rows.length > 99 ? '99+' : String(rows.length);
+    cnt.classList.toggle('z', !rows.length);
+    if (!rows.length) { list.innerHTML = '<div class="cf-e">ບໍ່ມີລາຍການລໍຖ້າ</div>'; return; }
+    list.innerHTML = rows.map(function (r) {
+      var d = ''; try { d = new Date(r.at).toLocaleString('en-GB', { hour12: false, timeZone: 'Asia/Vientiane' }); } catch (e) {}
+      var bank = BANK[r.bank] || r.bank || '';
+      return '<div class="cf-it"><div class="cf-r"><span class="cf-u">' + esc(r.username || '\u2014') + '</span><span class="cf-a">' + fmt(r.amount) + '</span></div>'
+        + '<div class="cf-m">' + esc(bank) + ' \u2022 ' + esc(d) + '</div>'
+        + '<div class="cf-b"><button type="button" data-a="slip" data-id="' + r.id + '">ເບິ່ງສະລິບ</button>'
+        + '<button type="button" class="no" data-a="no" data-id="' + r.id + '">ປະຕິເສດ</button>'
+        + '<button type="button" class="ok" data-a="ok" data-id="' + r.id + '">ອະນຸມັດ</button></div></div>';
+    }).join('');
+  }
+  function load() {
+    var t = tok(); if (!t || busy) return;
+    rpc('adm_topup_list', { p_token: t, p_status: 'pending' }).then(function (j) {
+      if (!j || !j.ok) { if (!list.querySelector('.cf-it')) list.innerHTML = '<div class="cf-e">ບໍ່ມີສິດເຂົ້າເຖິງ ຫຼື ເຊດຊັນໝົດອາຍຸ</div>'; return; }
+      render(j.rows || []);
+    }).catch(function () { if (!list.querySelector('.cf-it')) list.innerHTML = '<div class="cf-e">ໂຫຼດບໍ່ໄດ້ ກະລຸນາລອງໃໝ່</div>'; });
+  }
+  list.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('button[data-a]'); if (!b || busy) return;
+    var id = Number(b.getAttribute('data-id')), a = b.getAttribute('data-a');
+    if (a === 'slip') {
+      rpc('adm_topup_slip', { p_token: tok(), p_id: id }).then(function (j) {
+        if (j && j.ok && j.slip) { img.src = j.slip; ov.classList.add('show'); } else toast('ບໍ່ພົບສະລິບ');
+      }).catch(function () { toast('ໂຫຼດສະລິບບໍ່ໄດ້'); });
+      return;
+    }
+    var ok = a === 'ok';
+    if (!confirm(ok ? 'ຢືນຢັນອະນຸມັດ ແລະເພີ່ມເງິນເຂົ້າບັນຊີສະມາຊິກ?' : 'ປະຕິເສດລາຍການນີ້?')) return;
+    busy = true;
+    Array.prototype.forEach.call(list.querySelectorAll('button'), function (x) { x.disabled = true; });
+    rpc('adm_topup_review', { p_token: tok(), p_id: id, p_approve: ok, p_note: '' }).then(function (j) {
+      busy = false;
+      if (j && j.ok) {
+        toast(ok ? 'ອະນຸມັດແລ້ວ \u2014 ຍອດໃໝ່ ' + fmt(j.balance) : 'ປະຕິເສດແລ້ວ');
+        var p = document.querySelector('.adm-pill'); if (p) p.click();
+        document.dispatchEvent(new Event('exrefresh'));
+      } else toast(j && j.code === 'nf' ? 'ລາຍການນີ້ຖືກດຳເນີນການແລ້ວ' : 'ເຮັດບໍ່ສຳເລັດ');
+      load();
+    }).catch(function () { busy = false; toast('ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້'); load(); });
+  });
+  ov.addEventListener('click', function () { ov.classList.remove('show'); img.removeAttribute('src'); });
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) load(); });
+  setInterval(load, 30000);
+  load();
+})();
+</script>
+<script>
+(function(){
+  var h=document.getElementById('hdr'),b=document.getElementById('menuBtn'),sn=document.getElementById('snack'),st;
+  function set(o){h.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false')}
+  function toast(t){sn.textContent=t;sn.classList.add('show');clearTimeout(st);st=setTimeout(function(){sn.classList.remove('show')},2200)}
+  b.addEventListener('click',function(e){e.stopPropagation();set(!h.classList.contains('open'))});
+  document.addEventListener('click',function(e){if(!h.contains(e.target))set(false)});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+  /* ແຕ່ລະໝວດ: ເປີດໄດ້ເທື່ອລະອັນ */
+  document.querySelectorAll('.grp>.nr').forEach(function(r){
+    r.addEventListener('click',function(){
+      var g=r.parentNode,o=!g.classList.contains('open');
+      document.querySelectorAll('.grp.open').forEach(function(x){x.classList.remove('open');x.firstChild.setAttribute('aria-expanded','false')});
+      if(o){g.classList.add('open');r.setAttribute('aria-expanded','true')}
+    });
+  });
+  document.getElementById('goDash').addEventListener('click',function(e){e.preventDefault();set(false);window.scrollTo({top:0,behavior:'smooth'})});
+  /* ໜ້າຍ່ອຍເຫຼົ່ານີ້ຍັງບໍ່ໄດ້ສ້າງ — ກົດແລ້ວແຈ້ງເຕືອນກ່ອນ */
+  document.querySelectorAll('.si[data-soon]').forEach(function(x){x.addEventListener('click',function(){set(false);toast('ໜ້ານີ້ຍັງບໍ່ໄດ້ສ້າງ')})});
+})();
+</script>
+<script>
+(function(){
+  var $=function(i){return document.getElementById(i)};
+  var hdr=$('hdr'),mb=$('menuBtn'),dv=$('vDash'),pv=$('vProd'),go=$('goProd'),gd=$('goDash'),ind=$('tabInd'),tabs=$('tabs');
+  var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var EASE='cubic-bezier(.22,.8,.3,1)',cur='dash',busy=null,sn=$('snack'),st;
+  function toast(t){sn.textContent=t;sn.classList.add('show');clearTimeout(st);st=setTimeout(function(){sn.classList.remove('show')},2200)}
+  function closeMenu(){hdr.classList.remove('open');mb.setAttribute('aria-expanded','false')}
+  function anim(el,from,to,o){if(rm||!el.animate)return{finished:Promise.resolve()};return el.animate([from,to],Object.assign({duration:300,easing:EASE,fill:'both'},o))}
+  function stagger(root){
+    if(rm)return;
+    var kids=[].slice.call(root.children).filter(function(k){return k.classList.contains('pane')?k.classList.contains('on'):true});
+    var list=[];kids.forEach(function(k){if(k.classList.contains('pane')){[].slice.call(k.children).forEach(function(c){list.push(c)})}else list.push(k)});
+    list.forEach(function(k,i){var a=anim(k,{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'},{duration:380,delay:60+i*45});a.finished&&a.finished.then(function(){try{a.cancel()}catch(e){}})});
+  }
+  function place(animate){
+    var t=tabs.querySelector('.tab.on');if(!t||pv.hidden)return;
+    ind.classList.toggle('no-anim',!animate);
+    ind.style.width=t.offsetWidth+'px';
+    ind.style.transform='translateX('+t.offsetLeft+'px)';
+    if(!animate){void ind.offsetWidth;ind.classList.remove('no-anim')}
+  }
+  function mark(name){
+    gd.classList.toggle('on',name==='dash');
+    if(name==='dash')gd.setAttribute('aria-current','page');else gd.removeAttribute('aria-current');
+    go.classList.toggle('on',name==='prod');
+  }
+  function show(name,instant){
+    if(name===cur)return;
+    var from=cur==='dash'?dv:pv,to=name==='dash'?dv:pv;
+    cur=name;mark(name);
+    try{history.replaceState(null,'',name==='prod'?'#products':location.pathname+location.search)}catch(e){}
+    var token=busy={};
+    function enter(){
+      if(busy!==token)return;
+      from.hidden=true;to.hidden=false;window.scrollTo(0,0);
+      if(name==='prod')place(false);
+      if(instant){return}
+      var a=anim(to,{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'},{duration:340});
+      a.finished&&a.finished.then(function(){try{a.cancel()}catch(e){}});
+      if(name==='prod')stagger(to);
+    }
+    if(instant||rm){enter();return}
+    var o=anim(from,{opacity:1,transform:'none'},{opacity:0,transform:'translateY(-8px)'},{duration:150,easing:'ease-in'});
+    o.finished.then(function(){try{o.cancel()}catch(e){};enter()});
+  }
+  /* แท็บ: ตัวแดงเลื່ອນໄປຫາແຖບທີ່ເລືອກ + ເນື້ອຫາເລື່ອນເຂົ້າ */
+  var switching=false;
+  tabs.addEventListener('click',function(e){
+    var b=e.target.closest('.tab');if(!b||b.classList.contains('on')||switching)return;
+    var old=tabs.querySelector('.tab.on'),oldP=$(old.dataset.pane),newP=$(b.dataset.pane);
+    var dir=b.offsetLeft>old.offsetLeft?1:-1;
+    old.classList.remove('on');old.setAttribute('aria-selected','false');
+    b.classList.add('on');b.setAttribute('aria-selected','true');
+    place(true);
+    try{b.scrollIntoView({inline:'nearest',block:'nearest',behavior:rm?'auto':'smooth'})}catch(x){}
+    if(rm){oldP.classList.remove('on');newP.classList.add('on');return}
+    switching=true;
+    var o=anim(oldP,{opacity:1,transform:'none'},{opacity:0,transform:'translateX('+(-14*dir)+'px)'},{duration:140,easing:'ease-in'});
+    o.finished.then(function(){
+      try{o.cancel()}catch(x){}
+      oldP.classList.remove('on');newP.classList.add('on');
+      var a=anim(newP,{opacity:0,transform:'translateX('+(16*dir)+'px)'},{opacity:1,transform:'none'},{duration:300});
+      a.finished.then(function(){try{a.cancel()}catch(x){};switching=false});
+      [].slice.call(newP.children).forEach(function(k,i){var c=anim(k,{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'},{duration:300,delay:30+i*40});c.finished.then(function(){try{c.cancel()}catch(x){}})});
+    });
+  });
+  window.addEventListener('resize',function(){place(false)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){place(false)});
+  go.addEventListener('click',function(){closeMenu();show('prod')});
+  gd.addEventListener('click',function(){show('dash')});
+  document.querySelectorAll('[data-add]').forEach(function(b){b.addEventListener('click',function(){toast('ໜ້າເພີ່ມ'+b.dataset.add+'ຍັງບໍ່ໄດ້ສ້າງ')})});  /* ປຸ່ມເພີ່ມໝວດໝູ່ (ຍັງບໍ່ໄດ້ສ້າງ) — ເພີ່ມສິນຄ້າຢູ່ໃນສະຄຣິບດ້ານລຸ່ມ */
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){toast('ມີສະເພາະໝວດ "ທັງໝົດ" ເທົ່ານັ້ນ')})});
+  if(location.hash==='#products')show('prod',true);
+})();
+</script>
+<script>
+/* ===== ຈັດການສິນຄ້າ: ເພີ່ມ / ແກ້ໄຂ / ລຶບ — เชื่อม Supabase (ฟังก์ชัน adm_product_*) =====
+   - สิทธิ์: ฝั่งฐานข้อมูลตรวจว่า token เป็นแอดมินทุกครั้ง (ไม่ใช่แค่ซ่อนปุ่มในหน้าเว็บ)
+   - รูป: อัปโหลดเข้า Storage bucket "product-images" (ถ้าอัปโหลดไม่ได้ จะย่อรูปแล้วเก็บในฐานข้อมูลแทน)
+   - ภาษาในหน้าต่าง: เปลี่ยน LANG เป็น 'th' เพื่อใช้ข้อความภาษาไทยตามรูปอ้างอิง */
+(function(){
+  var LANG = window.ADM_LANG = 'lo';
+  var T = {
+    lo:{add:'ເພີ່ມສິນຄ້າ',edit:'ແກ້ໄຂສິນຄ້າ',name:'ຊື່ສິນຄ້າ',phName:'ເຊັ່ນ Proxy UID',cat:'ໝວດໝູ່',cat0:'— ບໍ່ລະບຸ —',img:'ຮູບພາບສິນຄ້າ',drop:'ກົດເພື່ອອັບໂຫຼດຮູບຈາກເຄື່ອງ',up:'ອັບໂຫຼດຈາກເຄື່ອງ',url:'ຫຼື ວາງລິ້ງ URL ຮູບພາບ',hint:'ຮອງຮັບ JPG / PNG / WEBP / GIF ສູງສຸດ 10MB',notice:'ຂໍ້ຄວາມແຈ້ງເຕືອນ',phNotice:'ກະລຸນາອ່ານ ...',sort:'ລຳດັບສະແດງ (sort)',desc:'ລາຍລະອຽດສິນຄ້າ (ຮອງຮັບ HTML)',phDesc:'ຂຽນລາຍລະອຽດສິນຄ້າ...',status:'ສະຖານະ',on:'✓ ເປີດໃຊ້ງານ',off:'✕ ປິດໃຊ້ງານ',upd:'⟳ ປິດອັບເດດ',fake:'ຍອດຂາຍຈຳລອງ',opts:'ລາຄາ / ຕົວເລືອກສິນຄ້າ',opt:'ຕົວເລືອກ',addOpt:'+ ເພີ່ມຕົວເລືອກ',cancel:'ຍົກເລີກ',save:'ບັນທຶກ',saving:'ກຳລັງບັນທຶກ...',
+      uploading:'ກຳລັງອັບໂຫຼດ...',needName:'ກະລຸນາໃສ່ຊື່ສິນຄ້າ',badImgType:'ຮອງຮັບສະເພາະ JPG / PNG / WEBP / GIF',bigImg:'ໄຟລ໌ໃຫຍ່ເກີນ 10MB',badUrl:'ລິ້ງຮູບບໍ່ຖືກຕ້ອງ (ຕ້ອງຂຶ້ນຕົ້ນດ້ວຍ http:// ຫຼື https://)',upFail:'ອັບໂຫຼດຮູບບໍ່ສຳເລັດ',upFallback:'ອັບໂຫຼດຮູບແລ້ວ (ໂໝດສຳຮອງ)',saved:'ບັນທຶກສິນຄ້າແລ້ວ',deleted:'ລຶບສິນຄ້າແລ້ວ',confirmDel:'ຕ້ອງການລຶບສິນຄ້ານີ້ບໍ? ລຶບແລ້ວກູ້ຄືນບໍ່ໄດ້',noAuth:'ບໍ່ມີສິດແອດມິນ ຫຼື ເຊດຊັນໝົດອາຍຸ ກະລຸນາເຂົ້າສູ່ລະບົບໃໝ່',net:'ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້ ກະລຸນາລອງໃໝ່',fail:'ບັນທຶກບໍ່ສຳເລັດ ກະລຸນາລອງໃໝ່',loadFail:'ໂຫຼດລາຍການສິນຄ້າບໍ່ໄດ້',
+      all:'ທັງໝົດ',empty:'— ຍັງບໍ່ມີສິນຄ້າ ກົດ "ເພີ່ມສິນຄ້າ" ເພື່ອເລີ່ມ —',noFind:'— ບໍ່ພົບສິນຄ້າທີ່ຄົ້ນຫາ —',loading:'— ກຳລັງໂຫຼດ... —',sold:'ຂາຍແລ້ວ',stock:'ຄັງ',stOn:'ເປີດໃຊ້ງານ',stOff:'ປິດໃຊ້ງານ',stUpd:'ປິດອັບເດດ',rm:'ລຶບ',ed:'ແກ້ໄຂ',para:'Paragraph',close:'ປິດ'},
+    th:{add:'เพิ่มสินค้า',edit:'แก้ไขสินค้า',name:'ชื่อสินค้า',phName:'เช่น Proxy UID',cat:'หมวดหมู่',cat0:'— ไม่ระบุ —',img:'รูปภาพสินค้า',drop:'คลิกเพื่ออัปโหลดรูปจากเครื่อง',up:'อัปโหลดจากเครื่อง',url:'หรือวางลิงก์ URL รูปภาพ',hint:'รองรับ JPG / PNG / WEBP / GIF สูงสุด 10MB',notice:'ข้อความแจ้งเตือน',phNotice:'โปรดอ่าน ...',sort:'ลำดับแสดง (sort)',desc:'รายละเอียดสินค้า (HTML รองรับ)',phDesc:'เขียนรายละเอียดสินค้า...',status:'สถานะ',on:'✓ เปิดใช้งาน',off:'✕ ปิดใช้งาน',upd:'⟳ ปิดอัปเดต',fake:'ยอดขายจำลอง',opts:'ราคา / ตัวเลือกสินค้า',opt:'ตัวเลือก',addOpt:'+ เพิ่มตัวเลือก',cancel:'ยกเลิก',save:'บันทึก',saving:'กำลังบันทึก...',
+      uploading:'กำลังอัปโหลด...',needName:'กรุณาใส่ชื่อสินค้า',badImgType:'รองรับเฉพาะ JPG / PNG / WEBP / GIF',bigImg:'ไฟล์ใหญ่เกิน 10MB',badUrl:'ลิงก์รูปไม่ถูกต้อง (ต้องขึ้นต้นด้วย http:// หรือ https://)',upFail:'อัปโหลดรูปไม่สำเร็จ',upFallback:'อัปโหลดรูปแล้ว (โหมดสำรอง)',saved:'บันทึกสินค้าแล้ว',deleted:'ลบสินค้าแล้ว',confirmDel:'ต้องการลบสินค้านี้ใช่ไหม? ลบแล้วกู้คืนไม่ได้',noAuth:'ไม่มีสิทธิ์แอดมินหรือเซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่',net:'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาลองใหม่',fail:'บันทึกไม่สำเร็จ กรุณาลองใหม่',loadFail:'โหลดรายการสินค้าไม่ได้',
+      all:'ทั้งหมด',empty:'— ยังไม่มีสินค้า กด "เพิ่มสินค้า" เพื่อเริ่ม —',noFind:'— ไม่พบสินค้าที่ค้นหา —',loading:'— กำลังโหลด... —',sold:'ขายแล้ว',stock:'คลัง',stOn:'เปิดใช้งาน',stOff:'ปิดใช้งาน',stUpd:'ปิดอัปเดต',rm:'ลบ',ed:'แก้ไข',para:'Paragraph',close:'ปิด'}
+  };
+  var L = T[LANG] || T.lo;
+  var DB = EX_DB, $ = function(i){return document.getElementById(i)};
+  var esc = escH;
+
+  var SV = function(p,x){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"'+(x||'')+'>'+p+'</svg>'};
+  var ICO = {
+    brush:'<svg viewBox="0 0 24 24"><path d="M20.8 3.2a1.7 1.7 0 0 0-2.4 0l-9 9 2.4 2.4 9-9a1.7 1.7 0 0 0 0-2.4z" fill="#f5a524"/><path d="M8.2 13.6c-2 0-3.4 1.5-3.4 3.3 0 1.3-.7 2.2-1.8 2.8 4 1.2 8.6.1 8.6-3.5z" fill="#f5a524"/></svg>',
+    x:SV('<path d="M6 6l12 12M18 6 6 18"/>'),
+    cloud:'<svg viewBox="0 0 24 24"><path d="M7 19a4.6 4.6 0 0 1-.7-9.15A6.2 6.2 0 0 1 18.2 9.4 4.8 4.8 0 0 1 17.5 19z" style="fill:var(--red)"/><path d="M12 16.2v-6M9.4 12.3 12 9.7l2.6 2.6" fill="none" stroke="#000" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    up:SV('<path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 20h16"/>'),
+    warn:'<svg viewBox="0 0 24 24"><path d="M12 3.2 1.9 20.5h20.2z" fill="#f5b400"/><path d="M12 9.5v5.2" stroke="#1a1200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.4" r="1.2" fill="#1a1200"/></svg>',
+    grid:'<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="#3b82f6"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18" stroke="#0b1d3d" stroke-width="1.5"/></svg>',
+    undo:SV('<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>'),
+    redo:SV('<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>'),
+    hl:SV('<path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"/>'),
+    al:SV('<path d="M3 6h18M3 12h12M3 18h16"/>'), ac:SV('<path d="M3 6h18M7 12h10M5 18h14"/>'),
+    ar:SV('<path d="M3 6h18M9 12h12M5 18h16"/>'), aj:SV('<path d="M3 6h18M3 12h18M3 18h18"/>'),
+    ul:SV('<path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4" cy="6" r="1" fill="currentColor"/><circle cx="4" cy="12" r="1" fill="currentColor"/><circle cx="4" cy="18" r="1" fill="currentColor"/>'),
+    ol:SV('<path d="M10 12h11M10 18h11M10 6h11M4 10h2M4 6h1v4M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>'),
+    edit:SV('<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>'),
+    trash:SV('<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/>'),
+    box:SV('<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>')
+  };
+
+  /* ---------- helpers ---------- */
+  function tok(){ try{ return localStorage.getItem('exSession')||sessionStorage.getItem('exSession')||''; }catch(e){ return ''; } }
+  function rpc(fn, body){
+    var ctl = new AbortController(), t = setTimeout(function(){ctl.abort()}, 20000);
+    return fetch(DB.url+'/rest/v1/rpc/'+fn, {method:'POST',signal:ctl.signal,
+      headers:{'Content-Type':'application/json',apikey:DB.key,Authorization:'Bearer '+DB.key}, body:JSON.stringify(body)})
+    .then(function(r){ return r.json().catch(function(){return null}).then(function(j){ if(!r.ok) throw new Error('http '+r.status); return j; }); })
+    .finally(function(){ clearTimeout(t); });
+  }
+  var sn = $('snack'), snT;
+  function toast(t){ sn.textContent = t; sn.classList.add('show'); clearTimeout(snT); snT = setTimeout(function(){ sn.classList.remove('show'); }, 2600); }
+  function errMsg(j, dflt){ return j && j.code === 'not_admin' ? L.noAuth : (j && j.code === 'bad_name' ? L.needName : (dflt || L.fail)); }
+  var money = function(n){ return '₭' + (Number(n)||0).toLocaleString('en-US'); };
+
+  /* ---------- โครงหน้าต่าง ---------- */
+  function catOptsHTML(){ return '<option value="">'+L.cat0+'</option>' + cats.map(function(c){ return '<option value="'+esc(c.k)+'">'+esc(c.n)+'</option>'; }).join(''); }
+  var catOpts = catOptsHTML();
+  var pm = document.createElement('div');
+  pm.className = 'pm'; pm.id = 'pm'; pm.hidden = true; pm.setAttribute('aria-hidden','true');
+  pm.innerHTML =
+  '<form class="pm-card" id="pmForm" role="dialog" aria-modal="true" aria-labelledby="pmT" novalidate>'+
+    '<div class="pm-h"><span class="pm-brush">'+ICO.brush+'</span><h3 id="pmT"></h3><button type="button" class="pm-x" id="pmX" aria-label="'+L.close+'">'+ICO.x+'</button></div>'+
+    '<div class="pm-b" id="pmB">'+
+      '<label class="pm-l" for="fName">'+L.name+' <i>*</i></label>'+
+      '<input class="pm-i" id="fName" maxlength="120" autocomplete="off" placeholder="'+L.phName+'">'+
+      '<label class="pm-l" for="fCat">'+L.cat+'</label>'+
+      '<div class="pm-sel"><select class="pm-i" id="fCat">'+catOpts+'</select></div>'+
+      '<label class="pm-l">'+L.img+'</label>'+
+      '<div class="pm-drop" id="fDrop" role="button" tabindex="0"><div class="pm-dc">'+ICO.cloud+'<span id="fDropT">'+L.drop+'</span></div><img id="fPrev" alt="" hidden><button type="button" class="pm-rm" id="fRm" aria-label="'+L.rm+'" hidden>'+ICO.x+'</button></div>'+
+      '<button type="button" class="pm-up" id="fUp">'+ICO.up+'<span>'+L.up+'</span></button>'+
+      '<input type="file" id="fFile" accept="image/jpeg,image/png,image/webp,image/gif" hidden>'+
+      '<input class="pm-i" id="fUrl" inputmode="url" autocapitalize="none" autocomplete="off" spellcheck="false" placeholder="'+L.url+'">'+
+      '<p class="pm-hint">'+L.hint+'</p>'+
+      '<label class="pm-l" for="fNotice">'+ICO.warn+L.notice+'</label>'+
+      '<input class="pm-i" id="fNotice" maxlength="300" autocomplete="off" placeholder="'+L.phNotice+'">'+
+      '<label class="pm-l" for="fSort">'+ICO.grid+L.sort+'</label>'+
+      '<input class="pm-i" id="fSort" type="number" inputmode="numeric" step="1" value="0">'+
+      '<label class="pm-l">'+L.desc+'</label>'+
+      '<div class="ed" id="ed">'+
+        '<div class="ed-t">'+
+          '<div class="ed-g"><button type="button" class="ed-btn" data-c="undo" aria-label="Undo">'+ICO.undo+'</button><button type="button" class="ed-btn" data-c="redo" aria-label="Redo">'+ICO.redo+'</button><span class="ed-sp"></span></div>'+
+          '<div class="pm-sel ed-sel"><select class="pm-i" id="edBlock" aria-label="Paragraph"><option value="p">Paragraph</option><option value="h1">Heading 1</option><option value="h2">Heading 2</option><option value="h3">Heading 3</option></select></div>'+
+          '<div class="ed-g"><span class="ed-sp" style="margin-left:2px"></span><button type="button" class="ed-btn" data-c="bold" aria-label="Bold"><b>B</b></button><button type="button" class="ed-btn" data-c="italic" aria-label="Italic"><i>I</i></button><button type="button" class="ed-btn" data-c="underline" aria-label="Underline"><u>U</u></button><button type="button" class="ed-btn" data-c="strikeThrough" aria-label="Strike"><s>S</s></button><span class="ed-sp"></span>'+
+          '<button type="button" class="ed-btn" data-col="fore" aria-label="Text color"><span class="ed-a"><em>A</em><span id="edBar"></span></span></button><button type="button" class="ed-btn" data-col="back" aria-label="Highlight">'+ICO.hl+'</button><span class="ed-sp"></span>'+
+          '<button type="button" class="ed-btn" data-c="justifyLeft" aria-label="Left">'+ICO.al+'</button><button type="button" class="ed-btn" data-c="justifyCenter" aria-label="Center">'+ICO.ac+'</button></div>'+
+          '<div class="ed-g"><button type="button" class="ed-btn" data-c="justifyRight" aria-label="Right">'+ICO.ar+'</button><button type="button" class="ed-btn" data-c="justifyFull" aria-label="Justify">'+ICO.aj+'</button><span class="ed-sp"></span><button type="button" class="ed-btn" data-c="insertUnorderedList" aria-label="Bullets">'+ICO.ul+'</button><button type="button" class="ed-btn" data-c="insertOrderedList" aria-label="Numbered">'+ICO.ol+'</button></div>'+
+          '<input class="ed-c" type="color" id="edColor" value="#ff3b30" tabindex="-1" aria-hidden="true">'+
+        '</div>'+
+        '<div class="ed-b" id="edBody" contenteditable="true" role="textbox" aria-multiline="true" data-ph="'+L.phDesc+'"></div>'+
+      '</div>'+
+      '<label class="pm-l" for="fStatus">'+L.status+'</label>'+
+      '<div class="pm-sel"><select class="pm-i" id="fStatus"><option value="active">'+L.on+'</option><option value="inactive">'+L.off+'</option><option value="update">'+L.upd+'</option></select></div>'+
+      '<label class="pm-l" for="fFake">'+L.fake+'</label>'+
+      '<input class="pm-i" id="fFake" type="number" inputmode="numeric" min="0" step="1" value="0">'+
+      '<label class="pm-l">'+L.opts+'</label>'+
+      '<div id="fOpts"></div>'+
+      '<button type="button" class="pm-add" id="fAddOpt">'+L.addOpt+'</button>'+
+    '</div>'+
+    '<div class="pm-f"><button type="button" class="pm-cancel" id="pmCancel">'+L.cancel+'</button><button type="submit" class="pm-save" id="pmSave">'+L.save+'</button></div>'+
+  '</form>';
+  document.body.appendChild(pm);
+
+  var F = {form:$('pmForm'),title:$('pmT'),body:$('pmB'),name:$('fName'),cat:$('fCat'),drop:$('fDrop'),dropT:$('fDropT'),prev:$('fPrev'),rm:$('fRm'),up:$('fUp'),file:$('fFile'),url:$('fUrl'),
+    notice:$('fNotice'),sort:$('fSort'),ed:$('edBody'),block:$('edBlock'),status:$('fStatus'),fake:$('fFake'),opts:$('fOpts'),save:$('pmSave'),color:$('edColor'),bar:$('edBar')};
+
+  /* ---------- ตัวเลือกราคา ---------- */
+  function optRow(label, price, removable){
+    var d = document.createElement('div'); d.className = 'pm-op';
+    d.innerHTML = '<div class="pm-opn"><input class="pm-i" data-k="label" maxlength="60" autocomplete="off" value="'+esc(label)+'">'+(removable?'<button type="button" class="pm-opx" aria-label="'+L.rm+'">'+ICO.x+'</button>':'')+'</div>'+
+      '<input class="pm-i" data-k="price" type="number" inputmode="numeric" min="0" step="1" value="'+esc(price)+'">';
+    return d;
+  }
+  function setOpts(list){
+    F.opts.innerHTML = '';
+    (list && list.length ? list : [{label:L.opt+' 1',price:0}]).forEach(function(o,i){ F.opts.appendChild(optRow(o.label, o.price, i>0)); });
+  }
+  $('fAddOpt').addEventListener('click', function(){
+    var n = F.opts.children.length + 1;
+    var r = optRow(L.opt+' '+n, 0, true); F.opts.appendChild(r);
+    r.scrollIntoView({block:'nearest',behavior:'smooth'}); r.querySelector('input').select();
+  });
+  F.opts.addEventListener('click', function(e){ var b = e.target.closest('.pm-opx'); if(b && F.opts.children.length > 1) b.closest('.pm-op').remove(); });
+
+  /* ---------- รูปภาพ ---------- */
+  var img = '', uploading = false;
+  function showImg(src){
+    img = src || '';
+    F.prev.hidden = !img; F.rm.hidden = !img;
+    if(img) F.prev.src = img; else F.prev.removeAttribute('src');
+    F.drop.querySelector('.pm-dc').style.visibility = img ? 'hidden' : '';
+  }
+  function pick(){ if(!uploading) F.file.click(); }
+  F.drop.addEventListener('click', function(e){ if(e.target.closest('#fRm')) return; pick(); });
+  F.drop.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+  F.up.addEventListener('click', pick);
+  F.rm.addEventListener('click', function(e){ e.stopPropagation(); showImg(''); F.url.value = ''; });
+  ['dragenter','dragover'].forEach(function(t){ F.drop.addEventListener(t, function(e){ e.preventDefault(); F.drop.classList.add('drag'); }); });
+  ['dragleave','drop'].forEach(function(t){ F.drop.addEventListener(t, function(e){ e.preventDefault(); F.drop.classList.remove('drag'); }); });
+  F.drop.addEventListener('drop', function(e){ var f = e.dataTransfer && e.dataTransfer.files[0]; if(f) handleFile(f); });
+  F.file.addEventListener('change', function(){ var f = F.file.files[0]; F.file.value = ''; if(f) handleFile(f); });
+  F.url.addEventListener('input', function(){
+    var v = F.url.value.trim();
+    F.url.classList.remove('bad');
+    showImg(/^https?:\/\//i.test(v) ? v : '');
+  });
+
+  function toDataURL(file){
+    return new Promise(function(res, rej){
+      if(file.type === 'image/gif'){
+        if(file.size > 600*1024) return rej(new Error('gif'));
+        var fr = new FileReader(); fr.onload = function(){ res(fr.result); }; fr.onerror = rej; return fr.readAsDataURL(file);
+      }
+      var u = URL.createObjectURL(file), im = new Image();
+      im.onload = function(){
+        var r = Math.min(1, 1000/Math.max(im.width, im.height)), c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(im.width*r)); c.height = Math.max(1, Math.round(im.height*r));
+        c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u);
+        var o = c.toDataURL('image/webp', .85); if(o.indexOf('data:image/webp') !== 0) o = c.toDataURL('image/jpeg', .85);
+        res(o);
+      };
+      im.onerror = function(){ URL.revokeObjectURL(u); rej(new Error('img')); };
+      im.src = u;
+    });
+  }
+  var EXT = {'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'};
+  async function uploadFile(file){
+    var name = Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10)+'.'+EXT[file.type];
+    try{
+      var r = await fetch(DB.url+'/storage/v1/object/product-images/'+name, {method:'POST',
+        headers:{apikey:DB.key, Authorization:'Bearer '+DB.key, 'x-admin-token':tok(), 'Content-Type':file.type, 'cache-control':'max-age=31536000'}, body:file});
+      if(r.ok) return {url: DB.url+'/storage/v1/object/public/product-images/'+name};
+    }catch(e){}
+    return {url: await toDataURL(file), fallback: true};
+  }
+  async function handleFile(file){
+    if(!EXT[file.type]) return toast(L.badImgType);
+    if(file.size > 10*1024*1024) return toast(L.bigImg);
+    uploading = true; F.up.disabled = true; F.save.disabled = true; F.dropT.textContent = L.uploading;
+    try{
+      var r = await uploadFile(file);
+      showImg(r.url); F.url.value = r.fallback ? '' : r.url;
+      if(r.fallback) toast(L.upFallback);
+    }catch(e){ toast(L.upFail); }
+    uploading = false; F.up.disabled = false; F.save.disabled = false; F.dropT.textContent = L.drop;
+  }
+
+  /* ---------- ตัวแก้ไขรายละเอียด (rich text) ---------- */
+  var savedRange = null;
+  function saveSel(){ var s = getSelection(); if(s.rangeCount && F.ed.contains(s.anchorNode)) savedRange = s.getRangeAt(0).cloneRange(); }
+  function restoreSel(){ F.ed.focus(); if(savedRange){ var s = getSelection(); s.removeAllRanges(); s.addRange(savedRange); } }
+  function exec(c, v){ F.ed.focus(); try{ document.execCommand('styleWithCSS', false, true); }catch(e){} document.execCommand(c, false, v == null ? null : v); sync(); }
+  var colMode = 'fore';
+  F.ed.parentNode.querySelector('.ed-t').addEventListener('mousedown', function(e){ if(!e.target.closest('select,input')) e.preventDefault(); });
+  F.ed.parentNode.querySelector('.ed-t').addEventListener('click', function(e){
+    var b = e.target.closest('.ed-btn'); if(!b) return;
+    if(b.dataset.c) return exec(b.dataset.c);
+    if(b.dataset.col){ colMode = b.dataset.col; saveSel(); F.color.click(); }
+  });
+  F.color.addEventListener('input', function(){
+    restoreSel(); var v = F.color.value;
+    if(colMode === 'fore'){ exec('foreColor', v); F.bar.style.background = v; }
+    else { try{ document.execCommand('styleWithCSS', false, true); }catch(e){} if(!document.execCommand('hiliteColor', false, v)) document.execCommand('backColor', false, v); sync(); }
+  });
+  F.block.addEventListener('change', function(){ restoreSel(); exec('formatBlock', F.block.value); });
+  F.block.addEventListener('mousedown', saveSel); F.block.addEventListener('focus', saveSel);
+  F.ed.addEventListener('paste', function(e){ e.preventDefault(); var t = (e.clipboardData||window.clipboardData).getData('text/plain'); document.execCommand('insertText', false, t); });
+  function sync(){
+    if(!F.ed.textContent.trim() && !F.ed.querySelector('img,ul,ol,hr')) { if(F.ed.innerHTML !== '') F.ed.innerHTML = ''; }
+    ['bold','italic','underline','strikeThrough','justifyLeft','justifyCenter','justifyRight','justifyFull','insertUnorderedList','insertOrderedList'].forEach(function(c){
+      var b = F.ed.parentNode.querySelector('[data-c="'+c+'"]'); if(!b) return;
+      var on = false; try{ on = document.queryCommandState(c); }catch(e){} b.classList.toggle('on', !!on);
+    });
+    try{ var v = String(document.queryCommandValue('formatBlock')||'').toLowerCase().replace(/[<>]/g,''); F.block.value = /^h[1-3]$/.test(v) ? v : 'p'; }catch(e){}
+  }
+  F.ed.addEventListener('input', sync); F.ed.addEventListener('keyup', sync); F.ed.addEventListener('mouseup', sync);
+  document.addEventListener('selectionchange', function(){ if(!pm.hidden && document.activeElement === F.ed) sync(); });
+
+  /* ---------- เปิด/ปิดหน้าต่าง ---------- */
+  var editId = null, saving = false;
+  function openForm(p){
+    editId = p ? p.id : null;
+    F.title.textContent = p ? L.edit : L.add;
+    F.name.value = p ? p.name : ''; F.name.classList.remove('bad');
+    F.cat.innerHTML = catOptsHTML();
+    F.cat.value = p ? (p.cat||'') : ''; if(F.cat.value !== (p ? (p.cat||'') : '')) F.cat.value = '';
+    var im = p && Array.isArray(p.imgs) && p.imgs[0] ? p.imgs[0] : '';
+    showImg(im); F.url.value = /^https?:/i.test(im) ? im : ''; F.url.classList.remove('bad');
+    F.notice.value = p ? (p.notice||'') : '';
+    F.sort.value = p ? (p.sort||0) : 0;
+    F.ed.innerHTML = p ? cleanHTML(p.desc||'') : ''; F.block.value = 'p'; F.bar.style.background = '';
+    F.status.value = p ? p.status : 'active';
+    F.fake.value = p ? (p.fake_sold||0) : 0;
+    setOpts(p && p.durs && p.durs.length ? p.durs : null);
+    pm.hidden = false; pm.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden';
+    F.body.scrollTop = 0; void pm.offsetWidth; pm.classList.add('on');
+  }
+  function closeForm(){
+    if(saving || uploading) return;
+    pm.classList.remove('on'); pm.setAttribute('aria-hidden','true'); document.body.style.overflow = '';
+    setTimeout(function(){ if(!pm.classList.contains('on')) pm.hidden = true; }, 240);
+  }
+  $('pmX').addEventListener('click', closeForm); $('pmCancel').addEventListener('click', closeForm);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !pm.hidden) closeForm(); });
+
+  F.form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if(saving || uploading) return;
+    var name = F.name.value.trim();
+    if(!name){ F.name.classList.add('bad'); F.name.focus(); return toast(L.needName); }
+    var u = F.url.value.trim();
+    if(u && !/^https?:\/\//i.test(u)){ F.url.classList.add('bad'); F.url.focus(); return toast(L.badUrl); }
+    var durs = [].slice.call(F.opts.children).map(function(r,i){
+      return {label: r.querySelector('[data-k=label]').value.trim() || (L.opt+' '+(i+1)), price: Math.max(0, Math.round(Number(r.querySelector('[data-k=price]').value) || 0))};
+    });
+    var html = F.ed.textContent.trim() || F.ed.querySelector('ul,ol,img') ? F.ed.innerHTML.trim() : '';
+    if(html.length > 20000) return toast(L.fail);
+    var t = tok(); if(!t) return toast(L.noAuth);
+    saving = true; F.save.disabled = true; F.save.textContent = L.saving;
+    try{
+      var j = await rpc('adm_product_save', {
+        p_token: t, p_id: editId, p_name: name, p_cat: F.cat.value, p_imgs: img ? [img] : [], p_desc: html,
+        p_notice: F.notice.value.trim(), p_sort: Math.round(Number(F.sort.value) || 0), p_status: F.status.value,
+        p_fake_sold: Math.max(0, Math.round(Number(F.fake.value) || 0)), p_durs: durs
+      });
+      saving = false;
+      if(j && j.ok){ closeForm(); toast(L.saved); loadList(); }
+      else toast(errMsg(j));
+    }catch(err){ toast(L.net); }
+    saving = false; F.save.disabled = false; F.save.textContent = L.save;
+  });
+
+  /* ---------- รายการสินค้า ---------- */
+  var list = [], state = 'loading', pList = $('pList'), chipN = $('pChipN'), qP = $('qP');
+  function render(){
+    chipN.textContent = L.all + ' (' + list.length + ')';
+    var q = qP.value.trim().toLowerCase();
+    var rows = list.filter(function(p){ return !q || p.name.toLowerCase().indexOf(q) > -1; });
+    if(!rows.length){
+      pList.innerHTML = '';
+      emptyEl.textContent = state === 'loading' ? L.loading : state === 'error' ? L.loadFail : (list.length ? L.noFind : L.empty);
+      emptyEl.hidden = false; return;
+    }
+    emptyEl.hidden = true;
+    pList.innerHTML = rows.map(function(p){
+      var im = Array.isArray(p.imgs) && p.imgs[0];
+      var lo = p.durs && p.durs.length ? Math.min.apply(null, p.durs.map(function(d){return d.price})) : p.price;
+      var c = (typeof cats !== "undefined" ? cats : []).filter(function(x){return x.k === p.cat})[0];
+      return '<div class="pr" data-id="'+p.id+'"><div class="pr-im">'+(im ? '<img src="'+esc(im)+'" alt="" loading="lazy">' : ICO.box)+'</div>'+
+        '<div class="pr-b"><div class="pr-n">'+esc(p.name)+'</div>'+
+        '<div class="pr-m"><b>'+money(lo)+'</b><span>'+L.sold+' '+((+p.fake_sold||0))+'</span><span>'+L.stock+' '+(+p.stock||0)+'</span>'+(c?'<span>'+esc(c.n)+'</span>':'')+'</div>'+
+        '<span class="pr-st'+(p.status === 'active' ? '' : p.status === 'update' ? ' upd' : ' off')+'">'+(p.status === 'active' ? L.stOn : p.status === 'update' ? L.stUpd : L.stOff)+'</span></div>'+
+        '<div class="pr-a"><button type="button" class="pr-btn" data-ed aria-label="'+L.ed+'">'+ICO.edit+'</button><button type="button" class="pr-btn del" data-rm aria-label="'+L.rm+'">'+ICO.trash+'</button></div></div>';
+    }).join('');
+  }
+  var emptyEl = document.querySelector('#pp .empty-l');
+  document.addEventListener('cats:ready', function(){ F.cat.innerHTML = catOptsHTML(); render(); });
+  async function loadList(){
+    var t = tok(); if(!t) return;
+    try{
+      var j = await rpc('adm_product_list', {p_token: t});
+      if(j && j.ok){ list = j.products || []; state = 'ok'; }
+      else { state = 'error'; toast(errMsg(j, L.loadFail)); }
+    }catch(e){ state = 'error'; toast(L.loadFail); }
+    render();
+  }
+  qP.addEventListener('input', render);
+  pList.addEventListener('click', async function(e){
+    var row = e.target.closest('.pr'); if(!row) return;
+    var p = list.filter(function(x){ return String(x.id) === row.dataset.id; })[0]; if(!p) return;
+    if(e.target.closest('[data-ed]')) return openForm(p);
+    if(e.target.closest('[data-rm]')){
+      if(!confirm(L.confirmDel + '\n\n' + p.name)) return;
+      try{
+        var j = await rpc('adm_product_delete', {p_token: tok(), p_id: p.id});
+        if(j && j.ok){ toast(L.deleted); loadList(); } else toast(errMsg(j));
+      }catch(err){ toast(L.net); }
+    }
+  });
+  $('addProd').addEventListener('click', function(){ openForm(null); });
+  render();
+  /* โหลดรายการเมื่อเปิดแท็บสินค้า (ครั้งแรก) และทุกครั้งที่กลับมาที่หน้านี้ */
+  window.addEventListener('hashchange', function(){ if(location.hash === '#products') loadList(); });
+  $('goProd').addEventListener('click', loadList);
+  if(location.hash === '#products') setTimeout(loadList, 400);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden && !document.getElementById('vProd').hidden) loadList(); });
+})();
+</script>
+<script>
+/* ===== ຈັດການໝວດໝູ່: ເພີ່ມ / ແກ້ໄຂ / ລຶບ — เชื่อม Supabase (ฟังก์ชัน shop_categories, adm_category_save, adm_category_delete)
+   - ไม่มีคำอธิบายหมวด: มีแค่ ชื่อ + รูปหน้าปก   - ลบหมวด: สินค้าในหมวดนั้นจะกลายเป็น "ไม่ระบุหมวด" (ไม่ถูกลบ)
+   - ภาษา: ใช้ค่าเดียวกับหน้าต่างสินค้า (window.ADM_LANG: 'lo' หรือ 'th') */
+(function(){
+  var LANG = window.ADM_LANG || 'lo';
+  var T = {
+    lo:{add:'ເພີ່ມໝວດໝູ່ໃໝ່',edit:'ແກ້ໄຂໝວດໝູ່',name:'ຊື່ໝວດໝູ່',phName:'ເຊັ່ນ Digital License Premium',img:'ຮູບພາບໜ້າປົກໝວດໝູ່',drop:'ກົດເພື່ອອັບໂຫຼດຮູບຈາກເຄື່ອງ',up:'ອັບໂຫຼດຈາກເຄື່ອງ',url:'ຫຼື ວາງລິ້ງ URL ຮູບພາບ',hint:'ຮອງຮັບ JPG / PNG / WEBP / GIF ສູງສຸດ 10MB',save:'ບັນທຶກ ແລະ ສ້າງໝວດໝູ່',saveEdit:'ບັນທຶກການແກ້ໄຂ',saving:'ກຳລັງບັນທຶກ...',cancel:'ຍົກເລີກການແກ້ໄຂ',list:'ລາຍການໝວດໝູ່ທັງໝົດ',empty:'— ຍັງບໍ່ມີໝວດໝູ່ —',loading:'— ກຳລັງໂຫຼດ... —',items:'ສິນຄ້າ',ed:'ແກ້ໄຂ',rm:'ລຶບ',uploading:'ກຳລັງອັບໂຫຼດ...',needName:'ກະລຸນາໃສ່ຊື່ໝວດໝູ່',badImgType:'ຮອງຮັບສະເພາະ JPG / PNG / WEBP / GIF',bigImg:'ໄຟລ໌ໃຫຍ່ເກີນ 10MB',badUrl:'ລິ້ງຮູບບໍ່ຖືກຕ້ອງ (ຕ້ອງຂຶ້ນຕົ້ນດ້ວຍ http:// ຫຼື https://)',upFail:'ອັບໂຫຼດຮູບບໍ່ສຳເລັດ',upFallback:'ອັບໂຫຼດຮູບແລ້ວ (ໂໝດສຳຮອງ)',created:'ສ້າງໝວດໝູ່ແລ້ວ',saved:'ບັນທຶກໝວດໝູ່ແລ້ວ',deleted:'ລຶບໝວດໝູ່ແລ້ວ',confirmDel:'ຕ້ອງການລຶບໝວດໝູ່ນີ້ບໍ? ສິນຄ້າໃນໝວດຈະກາຍເປັນ "ບໍ່ລະບຸໝວດ" (ບໍ່ຖືກລຶບ)',noAuth:'ບໍ່ມີສິດແອດມິນ ຫຼື ເຊດຊັນໝົດອາຍຸ ກະລຸນາເຂົ້າສູ່ລະບົບໃໝ່',net:'ເຊື່ອມຕໍ່ເຊີບເວີບໍ່ໄດ້ ກະລຸນາລອງໃໝ່',fail:'ບັນທຶກບໍ່ສຳເລັດ ກະລຸນາລອງໃໝ່',loadFail:'ໂຫຼດລາຍການໝວດໝູ່ບໍ່ໄດ້'},
+    th:{add:'เพิ่มหมวดหมู่ใหม่',edit:'แก้ไขหมวดหมู่',name:'ชื่อหมวดหมู่',phName:'เช่น Digital License Premium',img:'รูปภาพหน้าปกหมวดหมู่',drop:'คลิกเพื่ออัปโหลดรูปจากเครื่อง',up:'อัปโหลดจากเครื่อง',url:'หรือวางลิงก์ URL รูปภาพ',hint:'รองรับ JPG / PNG / WEBP / GIF สูงสุด 10MB',save:'บันทึกและสร้างหมวดหมู่',saveEdit:'บันทึกการแก้ไข',saving:'กำลังบันทึก...',cancel:'ยกเลิกการแก้ไข',list:'รายการหมวดหมู่ทั้งหมด',empty:'— ยังไม่มีหมวดหมู่ —',loading:'— กำลังโหลด... —',items:'สินค้า',ed:'แก้ไข',rm:'ลบ',uploading:'กำลังอัปโหลด...',needName:'กรุณาใส่ชื่อหมวดหมู่',badImgType:'รองรับเฉพาะ JPG / PNG / WEBP / GIF',bigImg:'ไฟล์ใหญ่เกิน 10MB',badUrl:'ลิงก์รูปไม่ถูกต้อง (ต้องขึ้นต้นด้วย http:// หรือ https://)',upFail:'อัปโหลดรูปไม่สำเร็จ',upFallback:'อัปโหลดรูปแล้ว (โหมดสำรอง)',created:'สร้างหมวดหมู่แล้ว',saved:'บันทึกหมวดหมู่แล้ว',deleted:'ลบหมวดหมู่แล้ว',confirmDel:'ต้องการลบหมวดหมู่นี้ใช่ไหม? สินค้าในหมวดจะกลายเป็น "ไม่ระบุหมวด" (ไม่ถูกลบ)',noAuth:'ไม่มีสิทธิ์แอดมินหรือเซสชันหมดอายุ กรุณาเข้าสู่ระบบใหม่',net:'เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาลองใหม่',fail:'บันทึกไม่สำเร็จ กรุณาลองใหม่',loadFail:'โหลดรายการหมวดหมู่ไม่ได้'}
+  };
+  var L = T[LANG] || T.lo, D = EX_DB, esc = escH, $ = function(i){ return document.getElementById(i); };
+  var PLUS = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
+  var ICO = {
+    edit:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
+    trash:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></svg>',
+    tag:'<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg>'
+  };
+  function tok(){ try{ return localStorage.getItem('exSession')||sessionStorage.getItem('exSession')||''; }catch(e){ return ''; } }
+  function rpc(fn, body){
+    var ctl = new AbortController(), t = setTimeout(function(){ctl.abort()}, 20000);
+    return fetch(D.url+'/rest/v1/rpc/'+fn, {method:'POST',signal:ctl.signal,
+      headers:{'Content-Type':'application/json',apikey:D.key,Authorization:'Bearer '+D.key}, body:JSON.stringify(body)})
+    .then(function(r){ return r.json().catch(function(){return null}).then(function(j){ if(!r.ok) throw new Error('http '+r.status); return j; }); })
+    .finally(function(){ clearTimeout(t); });
+  }
+  var sn = $('snack'), snT;
+  function toast(t){ sn.textContent = t; sn.classList.add('show'); clearTimeout(snT); snT = setTimeout(function(){ sn.classList.remove('show'); }, 2600); }
+  function errMsg(j, d){ return j && j.code === 'not_admin' ? L.noAuth : (j && j.code === 'bad_name' ? L.needName : (d || L.fail)); }
+
+  var F = {form:$('cmForm'),name:$('cName'),drop:$('cDrop'),dropT:$('cDropT'),prev:$('cPrev'),rm:$('cRm'),up:$('cUp'),file:$('cFile'),url:$('cUrl'),save:$('cSave'),cancel:$('cCancel'),title:$('cmT')};
+  $('cNameL').textContent = L.name; $('cImgL').textContent = L.img; F.name.placeholder = L.phName; F.dropT.textContent = L.drop;
+  $('cUpT').textContent = L.up; F.url.placeholder = L.url; $('cHint').textContent = L.hint; $('cListT').textContent = L.list; F.cancel.textContent = L.cancel;
+
+  /* ----- รูป ----- */
+  var img = '', uploading = false, saving = false, editId = null;
+  function showImg(src){
+    img = src || ''; F.prev.hidden = !img; F.rm.hidden = !img;
+    if(img) F.prev.src = img; else F.prev.removeAttribute('src');
+    F.drop.querySelector('.pm-dc').style.visibility = img ? 'hidden' : '';
+  }
+  function pick(){ if(!uploading) F.file.click(); }
+  F.drop.addEventListener('click', function(e){ if(e.target.closest('#cRm')) return; pick(); });
+  F.drop.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); pick(); } });
+  F.up.addEventListener('click', pick);
+  F.rm.addEventListener('click', function(e){ e.stopPropagation(); showImg(''); F.url.value = ''; });
+  ['dragenter','dragover'].forEach(function(t){ F.drop.addEventListener(t, function(e){ e.preventDefault(); F.drop.classList.add('drag'); }); });
+  ['dragleave','drop'].forEach(function(t){ F.drop.addEventListener(t, function(e){ e.preventDefault(); F.drop.classList.remove('drag'); }); });
+  F.drop.addEventListener('drop', function(e){ var f = e.dataTransfer && e.dataTransfer.files[0]; if(f) handleFile(f); });
+  F.file.addEventListener('change', function(){ var f = F.file.files[0]; F.file.value = ''; if(f) handleFile(f); });
+  F.url.addEventListener('input', function(){ var v = F.url.value.trim(); F.url.classList.remove('bad'); showImg(/^https?:\/\//i.test(v) ? v : ''); });
+
+  function toDataURL(file){
+    return new Promise(function(res, rej){
+      if(file.type === 'image/gif'){ if(file.size > 600*1024) return rej(new Error('gif')); var fr = new FileReader(); fr.onload = function(){ res(fr.result); }; fr.onerror = rej; return fr.readAsDataURL(file); }
+      var u = URL.createObjectURL(file), im = new Image();
+      im.onload = function(){
+        var r = Math.min(1, 1500/Math.max(im.width, im.height)), c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round(im.width*r)); c.height = Math.max(1, Math.round(im.height*r));
+        c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u);
+        var o = c.toDataURL('image/webp', .85); if(o.indexOf('data:image/webp') !== 0) o = c.toDataURL('image/jpeg', .85);
+        res(o);
+      };
+      im.onerror = function(){ URL.revokeObjectURL(u); rej(new Error('img')); };
+      im.src = u;
+    });
+  }
+  var EXT = {'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/gif':'gif'};
+  async function uploadFile(file){
+    var name = 'cat-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10)+'.'+EXT[file.type];
+    try{
+      var r = await fetch(D.url+'/storage/v1/object/product-images/'+name, {method:'POST',
+        headers:{apikey:D.key, Authorization:'Bearer '+D.key, 'x-admin-token':tok(), 'Content-Type':file.type, 'cache-control':'max-age=31536000'}, body:file});
+      if(r.ok) return {url: D.url+'/storage/v1/object/public/product-images/'+name};
+    }catch(e){}
+    return {url: await toDataURL(file), fallback: true};
+  }
+  async function handleFile(file){
+    if(!EXT[file.type]) return toast(L.badImgType);
+    if(file.size > 10*1024*1024) return toast(L.bigImg);
+    uploading = true; F.up.disabled = true; F.save.disabled = true; F.dropT.textContent = L.uploading;
+    try{ var r = await uploadFile(file); showImg(r.url); F.url.value = r.fallback ? '' : r.url; if(r.fallback) toast(L.upFallback); }
+    catch(e){ toast(L.upFail); }
+    uploading = false; F.up.disabled = false; F.save.disabled = false; F.dropT.textContent = L.drop;
+  }
+
+  /* ----- ฟอร์ม: เพิ่ม / แก้ไข ----- */
+  function setMode(c){
+    editId = c ? c.id : null;
+    F.title.textContent = c ? L.edit : L.add;
+    F.save.innerHTML = (c ? '' : PLUS) + '<span>' + (c ? L.saveEdit : L.save) + '</span>';
+    F.cancel.hidden = !c;
+    F.name.value = c ? c.n : ''; F.name.classList.remove('bad');
+    showImg(c ? c.img : ''); F.url.value = c && /^https?:/i.test(c.img) ? c.img : ''; F.url.classList.remove('bad');
+  }
+  setMode(null);
+  F.cancel.addEventListener('click', function(){ setMode(null); });
+  F.form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if(saving || uploading) return;
+    var name = F.name.value.trim();
+    if(!name){ F.name.classList.add('bad'); F.name.focus(); return toast(L.needName); }
+    var u = F.url.value.trim();
+    if(u && !/^https?:\/\//i.test(u)){ F.url.classList.add('bad'); F.url.focus(); return toast(L.badUrl); }
+    var t = tok(); if(!t) return toast(L.noAuth);
+    var wasEdit = editId != null, cur = wasEdit ? cats.filter(function(x){ return x.id === editId; })[0] : null;
+    saving = true; F.save.disabled = true; F.save.innerHTML = '<span>' + L.saving + '</span>';
+    try{
+      var j = await rpc('adm_category_save', {p_token: t, p_id: editId, p_name: name, p_img: img || '', p_sort: wasEdit ? null : cats.length});
+      if(j && j.ok){ toast(wasEdit ? L.saved : L.created); setMode(null); await load(); }
+      else toast(errMsg(j));
+    }catch(err){ toast(L.net); }
+    saving = false; F.save.disabled = false;
+    F.save.innerHTML = (editId != null ? '' : PLUS) + '<span>' + (editId != null ? L.saveEdit : L.save) + '</span>';
+  });
+
+  /* ----- รายการ ----- */
+  var counts = {}, state = 'loading', list = $('cList'), cnt = $('cCnt'), empty = $('cEmpty');
+  function render(){
+    cnt.textContent = '(' + cats.length + ')';
+    if(!cats.length){ list.innerHTML = ''; empty.textContent = state === 'loading' ? L.loading : state === 'error' ? L.loadFail : L.empty; empty.hidden = false; return; }
+    empty.hidden = true;
+    list.innerHTML = cats.map(function(c){
+      return '<div class="pr" data-id="'+c.id+'"><div class="pr-im">'+(c.img ? '<img src="'+esc(c.img)+'" alt="" loading="lazy">' : ICO.tag)+'</div>'+
+        '<div class="pr-b"><div class="pr-n">'+esc(c.n)+'</div><div class="pr-m"><span>'+(counts[c.k]||0)+' '+L.items+'</span></div></div>'+
+        '<div class="pr-a"><button type="button" class="pr-btn" data-ed aria-label="'+L.ed+'">'+ICO.edit+'</button><button type="button" class="pr-btn del" data-rm aria-label="'+L.rm+'">'+ICO.trash+'</button></div></div>';
+    }).join('');
+  }
+  document.addEventListener('cats:ready', render);
+  async function load(){
+    try{
+      var rows = await rpc('shop_categories', {});
+      if(!Array.isArray(rows)) throw new Error('bad');
+      state = 'ok'; setCats(rows);
+    }catch(e){ state = 'error'; render(); toast(L.loadFail); return; }
+    var t = tok();
+    if(t){ try{ var j = await rpc('adm_product_list', {p_token: t}); if(j && j.ok){ counts = {}; (j.products||[]).forEach(function(p){ if(p.cat) counts[p.cat] = (counts[p.cat]||0) + 1; }); render(); } }catch(e){} }
+  }
+  list.addEventListener('click', async function(e){
+    var row = e.target.closest('.pr'); if(!row) return;
+    var c = cats.filter(function(x){ return String(x.id) === row.dataset.id; })[0]; if(!c) return;
+    if(e.target.closest('[data-ed]')){ setMode(c); F.form.scrollIntoView({behavior:'smooth',block:'start'}); return; }
+    if(e.target.closest('[data-rm]')){
+      if(!confirm(L.confirmDel + '\n\n' + c.n)) return;
+      try{
+        var j = await rpc('adm_category_delete', {p_token: tok(), p_id: c.id});
+        if(j && j.ok){ if(editId === c.id) setMode(null); toast(L.deleted); load(); } else toast(errMsg(j));
+      }catch(err){ toast(L.net); }
+    }
+  });
+  render();
+  window.addEventListener('hashchange', function(){ if(location.hash === '#products') load(); });
+  $('goProd').addEventListener('click', load);
+  document.querySelectorAll('[data-pane="pc"]').forEach(function(b){ b.addEventListener('click', load); });
+  setTimeout(load, 500);
+  document.addEventListener('visibilitychange', function(){ if(!document.hidden && !document.getElementById('vProd').hidden) load(); });
+})();
+</script>
+<script src="admin-sale.js"></script>
+<script src="notify.js"></script>
+</body>
+
+</html>

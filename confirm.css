@@ -1,0 +1,211 @@
+/* ===== หน้ายืนยันสั่งซื้อ (confirm.html) — โหมดทดลอง ===== */
+.cf-demo{font-size:11px;font-weight:600;color:#ffb21f;background:rgba(255,178,31,.12);border:1px solid rgba(255,178,31,.35);border-radius:8px;padding:3px 8px;margin-bottom:12px;display:inline-block}
+.cf-prod{display:flex;gap:12px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:16px;background:var(--bg)}
+.cf-img{width:84px;height:84px;border-radius:12px;overflow:hidden;position:relative;flex:none}
+.cf-pi{min-width:0;flex:1}
+.cf-pn{font-size:15px;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cf-pp{margin-top:4px;font-size:18px;font-weight:800;color:var(--red)}
+.cf-stock{margin-top:2px;font-size:12.5px;color:var(--muted)}
+.cf-lb{margin:14px 0 7px;font-size:13px;color:var(--muted);font-weight:600}
+.cf-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cf-opt{border:1.5px solid var(--border);border-radius:12px;padding:9px 6px;text-align:center;background:var(--bg);transition:.15s}
+.cf-opt b{display:block;font-size:14px}
+.cf-opt span{display:block;font-size:12px;color:var(--muted);margin-top:1px}
+.cf-opt.on{border-color:var(--red);background:var(--pink);box-shadow:0 0 0 3px rgba(var(--red-rgb),.12)}
+.cf-opt.off{opacity:.4;pointer-events:none}
+.cf-qty{display:flex;align-items:center;justify-content:space-between}
+.cf-step{display:flex;align-items:center;gap:4px;border:1px solid var(--border);border-radius:12px;background:var(--bg)}
+.cf-step button{width:38px;height:38px;font-size:20px;font-weight:700;border-radius:12px}
+.cf-step button:disabled{opacity:.3}
+.cf-step output{min-width:34px;text-align:center;font-weight:700;font-size:16px}
+.cf-promo{display:flex;gap:8px}
+.cf-promo input{flex:1;min-width:0;height:42px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);padding:0 12px;font:inherit;text-transform:uppercase;outline:none}
+.cf-promo input:focus{border-color:var(--red)}
+.cf-promo button{padding:0 16px;height:42px;border-radius:12px;background:var(--glass);border:1px solid var(--border);font-weight:600}
+.cf-promo button:disabled{opacity:.4}
+.cf-hint{margin-top:6px;font-size:12.5px;min-height:18px}
+.cf-hint.ok{color:#2fbf71}.cf-hint.bad{color:var(--red)}
+.cf-sum{margin-top:14px;border:1px solid var(--border);border-radius:16px;padding:6px 14px;background:var(--bg)}
+.cf-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px;border-bottom:1px dashed var(--border)}
+.cf-row:last-child{border-bottom:0}
+.cf-row span:first-child{color:var(--muted)}
+.cf-row.disc b{color:#2fbf71}
+.cf-row.tot{font-size:16px}.cf-row.tot b{font-size:20px;color:var(--red)}
+.cf-row.rem b.neg{color:var(--red)}
+.cf-warn{margin-top:10px;padding:10px 12px;border-radius:12px;background:var(--pink);color:var(--red);font-size:13px;display:none;align-items:center;justify-content:space-between;gap:8px}
+.cf-warn.show{display:flex}
+.cf-warn button{background:var(--red);color:#fff;border-radius:9px;padding:6px 12px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.cf-act{display:flex;gap:10px;margin-top:14px}
+.cf-cancel{flex:0 0 32%;height:48px;border-radius:14px;border:1px solid var(--border);background:var(--bg);font-weight:600}
+.cf-ok{flex:1;height:48px;border-radius:14px;background:linear-gradient(180deg,var(--red2),var(--red-d));color:#fff;font-weight:700;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 14px rgba(var(--red-rgb),.3)}
+.cf-ok:disabled{opacity:.4;box-shadow:none}
+.cf-done{display:none;text-align:center;padding:26px 6px 8px}
+.cf-sheet.done .cf-form{display:none}.cf-sheet.done .cf-done{display:block}
+.cf-tick{width:76px;height:76px;border-radius:50%;margin:0 auto 14px;background:rgba(47,191,113,.15);color:#2fbf71;display:flex;align-items:center;justify-content:center;animation:cfpop .5s cubic-bezier(.2,1.4,.4,1)}
+.cf-tick svg{width:40px;height:40px;stroke-width:2.4}
+.cf-done h3{font-size:19px;margin-bottom:6px}
+.cf-done p{color:var(--muted);font-size:13.5px;margin-bottom:4px}
+.cf-code{margin:14px auto 4px;padding:12px;border:1px dashed var(--red);border-radius:12px;background:var(--pink);font-family:monospace;font-size:15px;letter-spacing:1px;word-break:break-all}
+@keyframes cfpop{from{transform:scale(.3);opacity:0}to{transform:none;opacity:1}}
+
+/* ===== กล่อง "ตัวเลือก" (ขนาดกะทัดรัดตามรูปตัวอย่าง) ===== */
+.cf-sheet{--cf-ac:var(--red)}
+.cf-box{margin-top:12px;border:1px solid var(--border);border-radius:14px;background:var(--card);overflow:hidden}
+.cf-bh{width:100%;display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border);text-align:left}
+.cf-bh{transition:border-color .3s}
+.cf-box.closed .cf-bh{border-bottom-color:transparent}
+.cf-bi{width:32px;height:32px;border-radius:9px;border:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--cf-ac);flex:none}
+.cf-bi svg{width:16px;height:16px}
+.cf-bt{flex:1;font-size:15px;font-weight:700;color:var(--cf-ac)}
+.cf-chev{color:var(--muted);display:flex;transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.cf-chev svg{width:20px;height:20px;stroke-width:2.2}
+.cf-box.closed .cf-chev{transform:rotate(180deg)}
+.cf-search{width:100%;height:36px;border-radius:9px;border:1px solid var(--cf-ac);background:var(--glass);color:var(--text);padding:0 12px;font:inherit;font-size:13px;outline:none}
+.cf-search::placeholder{color:#a9a9b4;opacity:1}
+.cf-list{display:flex;flex-direction:column;gap:7px;margin-top:8px;padding:1px}
+.cf-or{display:flex;align-items:center;gap:11px;width:100%;padding:7px 9px;border:1px solid var(--border);border-radius:13px;background:var(--bg);text-align:left;transition:.15s}
+.cf-or.on{border-color:var(--cf-ac);box-shadow:0 0 0 1.5px color-mix(in srgb,color-mix(in srgb,var(--red) 70%,#fff) 35%,transparent)}
+.cf-oi{width:40px;height:48px;border-radius:5px;overflow:hidden;position:relative;flex:none}
+.cf-ot{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.cf-ot b{font-size:13px;font-weight:400;color:var(--cf-ac);line-height:1.3}
+.cf-op{display:flex;align-items:baseline;gap:5px;flex-wrap:wrap;line-height:1.3}
+.cf-op s{font-size:11.5px;color:var(--muted)}
+.cf-op em{font-style:normal;font-size:11.5px;font-weight:700;color:var(--cf-ac)}
+.cf-ob{flex:none;font-size:11.5px;padding:3px 8px;border-radius:6px;border:1px solid;white-space:nowrap;line-height:1.4}
+.cf-ob.ok{color:#2fbf71;border-color:#2fbf71}
+.cf-ob.no{color:#ff8a87;border-color:#d95b58}
+.cf-or.off .cf-ot b,.cf-or.off .cf-op em{opacity:.75}
+.cf-or.off{cursor:not-allowed}
+.cf-none{text-align:center;color:var(--muted);padding:14px 0;font-size:13px}
+.cf-info{margin-top:12px}
+.cf-info div{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0}
+.cf-info .a{font-size:15px}.cf-info .a b{font-size:15px;font-weight:500;color:var(--cf-ac)}
+.cf-info .b{font-size:13px}.cf-info .b span{color:var(--muted)}.cf-info .b b{font-weight:500;color:var(--cf-ac)}
+
+
+/* พับ/ขยายกล่องตัวเลือก: ทั้งกล่อง (รวมเส้นขอบ) เลื่อนขึ้น-ลงอย่างนุ่มนวล */
+.cf-bb{display:grid;grid-template-rows:1fr;transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1)}
+.cf-box.closed .cf-bb{grid-template-rows:0fr}
+.cf-bw{min-height:0;overflow:hidden;visibility:visible;transition:visibility 0s}
+.cf-box.closed .cf-bw{visibility:hidden;transition:visibility 0s .4s}
+.cf-bp{padding:10px;opacity:1;transform:none;transition:opacity .3s .08s,transform .4s cubic-bezier(.4,0,.2,1)}
+.cf-box.closed .cf-bp{opacity:0;transform:translateY(-10px);transition:opacity .18s,transform .4s cubic-bezier(.4,0,.2,1)}
+
+/* ===== รูปสินค้าใหญ่ + รูปย่อ + ชื่อ (ตามรูปตัวอย่าง) ===== */
+.cf-hero{position:relative;width:100%;aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:#000;border:1px solid var(--border)}
+.cf-thumbs{margin-top:12px}
+.cf-th{position:relative;width:64px;height:64px;border-radius:10px;overflow:hidden;border:2px solid var(--cf-ac,var(--red));box-shadow:0 0 0 1px color-mix(in srgb,color-mix(in srgb,var(--red) 70%,#fff) 30%,transparent)}
+.cf-title{margin-top:14px;font-size:24px;font-weight:400;line-height:1.25;color:#fff;opacity:1;text-transform:uppercase;word-break:break-word}
+.cf-stock{margin-top:4px}
+
+/* ===== ปุ่มคูปองส่วนลด + ช่องพิมพ์เลื่อนลงมา ===== */
+.cf-cp{width:100%;margin-top:14px;height:46px;border:1px solid var(--border);border-radius:14px;background:var(--bg);display:flex;align-items:center;gap:10px;padding:0 14px;font-size:14px;font-weight:500;text-align:left}
+.cf-cp>svg{width:18px;height:18px;color:var(--cf-ac,var(--red))}
+.cf-cpt{flex:1}
+.cf-cpst{font-size:12.5px;color:#2fbf71;font-weight:600;opacity:0;transition:opacity .25s}
+.cf-cpst.on{opacity:1}
+.cf-cpc{display:flex;color:var(--muted);transition:transform .4s cubic-bezier(.4,0,.2,1)}
+.cf-cpc svg{width:20px;height:20px;stroke-width:2.2}
+.cf-cp:not(.open) .cf-cpc{transform:rotate(180deg)}
+.cf-cp.open{border-color:var(--cf-ac,var(--red))}
+.cf-pw{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1)}
+.cf-pw.open{grid-template-rows:1fr}
+.cf-pwi{min-height:0;overflow:hidden;visibility:hidden;transition:visibility 0s .4s}
+.cf-pw.open .cf-pwi{visibility:visible;transition:visibility 0s}
+.cf-pwp{padding-top:10px;opacity:0;transform:translateY(-10px);transition:opacity .18s,transform .4s cubic-bezier(.4,0,.2,1)}
+.cf-pw.open .cf-pwp{opacity:1;transform:none;transition:opacity .3s .08s,transform .4s cubic-bezier(.4,0,.2,1)}
+
+/* ชื่อ + สต็อก อยู่ข้างรูปเล็ก */
+.cf-meta{display:flex;align-items:center;gap:14px;margin-top:12px}
+.cf-th{flex:none}
+.cf-mt{min-width:0;flex:1}
+.cf-meta .cf-title{margin-top:0;font-size:21px}
+.cf-meta .cf-stock{margin-top:3px;font-size:12.5px}
+
+/* ===== ລາຍລະອຽດ ใต้ปุ่มซื้อ ===== */
+.cf-det{margin-top:18px;border:1px solid var(--border);border-radius:14px;padding:14px 16px 12px;background:var(--bg)}
+.cf-det h4{font-size:16px;font-weight:600;margin-bottom:8px}
+.cf-det h5{font-size:14px;font-weight:600;margin:14px 0 6px;color:var(--cf-ac,var(--red))}
+.cf-det p{font-size:13.5px;line-height:1.7;color:var(--muted)}
+.cf-det ul,.cf-det ol{margin:8px 0 0 18px;font-size:13.5px;line-height:1.75;color:var(--muted)}
+.cf-det li::marker{color:var(--cf-ac,var(--red))}
+.cf-det .cf-det-n{margin-top:12px;font-size:11.5px;opacity:.8}
+
+/* ===== เลย์เอาต์หน้าแยก ===== */
+body.cf-page{--bg:#000;--card:#000;--glass:#000;--border:#34343c;--text:#ffffff;--muted:#bdbdc7;--red:var(--red-l,#ff4d4d);--cf-ac:var(--red);background:#000;color:var(--text);min-height:100vh}
+.cf-top{position:sticky;top:0;z-index:20;background:#000;border-bottom:1px solid var(--border);padding:calc(env(safe-area-inset-top,0px) + 8px) 14px 8px;display:flex;align-items:center;gap:12px}
+.cf-back{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text)}
+.cf-top h1{font-size:17px;font-weight:700}
+.cf-sheet{max-width:520px;margin:0 auto;padding:14px 18px calc(env(safe-area-inset-bottom,0px) + 36px)}
+.cf-demo{margin-bottom:12px}
+
+/* ===== หน้าผลการสั่งซื้อ (โหลด → ✓ / ✕ + การ์ดโผล่แบบเบลอ) ===== */
+.rs{padding-top:34px}
+.rs-ic{width:104px;height:104px;margin:0 auto 18px;opacity:0;filter:blur(16px);transform:scale(.7);animation:rsIcIn .8s cubic-bezier(.22,1,.36,1) .05s forwards}
+@keyframes rsIcIn{to{opacity:1;filter:blur(0);transform:none}}
+.rs-ic svg{width:100%;height:100%;overflow:visible}
+.rs-track{fill:none;stroke:var(--border);stroke-width:6;transition:stroke .4s}
+.rs-arc{fill:none;stroke:var(--red);stroke-width:6;stroke-linecap:round;stroke-dasharray:70 181.33;transform-box:fill-box;transform-origin:center;transform:rotate(-90deg);animation:rsSpin .9s linear infinite;transition:stroke-dasharray .55s cubic-bezier(.22,1,.36,1),stroke .3s}
+@keyframes rsSpin{from{transform:rotate(-90deg)}to{transform:rotate(270deg)}}
+.rs[data-s=ok] .rs-arc,.rs[data-s=no] .rs-arc{animation:none;stroke-dasharray:251.33 0;transform:rotate(-90deg)}
+.rs[data-s=ok] .rs-arc{stroke:#2fbf71}.rs[data-s=ok] .rs-track{stroke:rgba(47,191,113,.18)}
+.rs[data-s=no] .rs-track{stroke:rgba(var(--red-rgb),.18)}
+.rs-ck,.rs-x{fill:none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:0}
+.rs-ck{stroke:#2fbf71}.rs-x{stroke:var(--red)}
+.rs[data-s=ok] .rs-ck,.rs[data-s=no] .rs-x{opacity:1;animation:rsDraw .5s cubic-bezier(.65,0,.35,1) .35s forwards}
+@keyframes rsDraw{to{stroke-dashoffset:0}}
+.rs[data-s=ok] .rs-ic svg{filter:drop-shadow(0 6px 18px rgba(47,191,113,.35));animation:rsPop .6s .05s}
+.rs[data-s=no] .rs-ic svg{filter:drop-shadow(0 6px 18px rgba(var(--red-rgb),.3));animation:rsShake .5s .3s}
+@keyframes rsPop{40%{transform:scale(1.12)}}
+@keyframes rsShake{20%{transform:translateX(-6px)}45%{transform:translateX(6px)}70%{transform:translateX(-3px)}}
+
+.rs-h{font-size:21px;font-weight:700;margin-bottom:6px}
+.rs-in{animation:rsTxt .65s cubic-bezier(.22,1,.36,1) both}
+@keyframes rsTxt{from{opacity:0;filter:blur(10px);transform:translateY(8px)}to{opacity:1;filter:blur(0);transform:none}}
+.rs[data-s=load] .rs-h{color:var(--muted);font-size:16px;font-weight:500}
+.rs[data-s=ok] .rs-h{color:#2fbf71}.rs[data-s=no] .rs-h{color:var(--red)}
+
+.rs-body{margin-top:22px;text-align:left;display:flex;flex-direction:column;gap:12px}
+.rs-card,.rs-act,.rs-note{opacity:0;filter:blur(14px);transform:translateY(18px) scale(.97);animation:rsCard .75s cubic-bezier(.22,1,.36,1) calc(.3s + var(--i,0)*.15s) forwards}
+@keyframes rsCard{to{opacity:1;filter:blur(0);transform:none}}
+.rs-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:var(--shadow)}
+.rs-r{display:flex;justify-content:space-between;gap:14px;padding:8px 0;font-size:13.5px;color:var(--muted)}
+.rs-r+.rs-r{border-top:1px solid var(--border)}
+.rs-r b{color:var(--text);font-weight:600;text-align:right;word-break:break-word}
+.rs-r.ok b{color:#2fbf71}.rs-r.neg b{color:var(--red)}
+.rs-ch{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rs-th{position:relative;width:46px;height:46px;border-radius:10px;overflow:hidden;flex:none}
+.rs-ct{flex:1;min-width:0;display:flex;flex-direction:column}
+.rs-ct b{font-size:15px}.rs-ct span{font-size:12.5px;color:var(--muted)}
+.rs-no{font-size:12px;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:2px 8px}
+.rs-cd{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 14px;border:1px dashed var(--red);border-radius:12px;background:var(--pink)}
+.rs-code{flex:1;min-width:0;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16px;font-weight:600;letter-spacing:1.2px;word-break:break-all;transition:filter .3s}
+.rs-cd.hid .rs-code{filter:blur(7px);user-select:none}
+.rs-ib{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--text);background:var(--card);border:1px solid var(--border);transition:color .2s,border-color .2s,transform .15s}
+.rs-ib:active{transform:scale(.92)}.rs-ib.ok{color:#2fbf71;border-color:#2fbf71}
+.rs-act{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.rs-row2{display:flex;gap:10px}
+.rs-sec{flex:1;height:46px;border-radius:14px;border:1px solid var(--border);background:var(--card);font-weight:600;font-size:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+.rs-sec:active{transform:scale(.98)}
+.rs-link{height:40px;color:var(--muted);font-size:14px;font-weight:600}
+.rs-act .cf-ok{flex:none;width:100%}
+.rs-note{font-size:12px;color:var(--muted);text-align:center;line-height:1.6;margin-top:2px}
+@media (prefers-reduced-motion:reduce){
+  .rs-ic,.rs-in,.rs-card,.rs-act,.rs-note,.rs-ck,.rs-x,.rs-ic svg{animation-duration:.01ms!important;animation-delay:0s!important}
+  .rs-arc{animation:none!important}
+}
+.rs-act>.rs-sec{flex:none}
+
+/* ข้อความแจ้งเตือนของสินค้า + รายละเอียดสินค้าแบบ HTML */
+.cf-notice{margin:0 0 12px;padding:11px 14px;border-radius:12px;background:rgba(255,182,46,.10);border:1px solid rgba(255,182,46,.35);color:#ffb62e;font-size:13.5px;line-height:1.5;white-space:pre-wrap}
+.cf-notice[hidden]{display:none}
+.cf-rich{font-size:14px;line-height:1.6;overflow-wrap:anywhere}
+.cf-rich p,.cf-rich div{margin:0 0 6px}
+.cf-rich ul,.cf-rich ol{margin:4px 0 8px;padding-left:22px}
+
+/* ราคาตัวแทน: ราคาเดิมขีดทับ + ป้ายตัวแทน (ถ้าที่ไม่พอ ราคาเดิมตกลงบรรทัดล่างเอง) */
+.cf-op s{text-decoration-color:#ff4d4d}
+.cf-ag{display:inline-flex;align-items:center;gap:3px;font-style:normal;font-size:10.5px;font-weight:600;line-height:1;padding:3px 6px;border-radius:6px;color:#f7c84a;background:rgba(247,200,74,.12)}
+.cf-ag svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.4}
+.cf-info .a b{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:baseline;gap:1px 8px;text-align:right}
+.cf-info .a b s{font-size:.72em;font-weight:400;color:var(--muted);text-decoration-color:#ff4d4d}

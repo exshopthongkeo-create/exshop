@@ -1,0 +1,180 @@
+/* ===== เมนู: แถบบน (แคปซูลกระจก) ขยายเลื่อนลงมาเป็นรายการเมนู =====
+   โครง: .header > .h-row (แถวปุ่มเดิม) + .h-menu (พับอยู่ → ขยายด้วย grid-template-rows 0fr→1fr ไม่ต้องรู้ความสูง)
+   เปิดเมนู = เพิ่มคลาส .menu-open ที่ .header (ทำใน script.js: setMenu)
+   แต่ละรายการมีเส้นคั่นจาง ๆ ที่ขยายออกจากกลาง และไล่โผล่ทีละอันแบบ stagger */
+
+/* โครงแถบบน */
+.fixbar.header{display:block;height:auto;padding:0;border-radius:27px;
+  transition:border-radius .5s ease,box-shadow .5s ease}
+.header .h-row{display:flex;align-items:center;gap:5px;height:52px;padding:0 12px 0 10px}
+@media (max-width:420px){.header .h-row{gap:4px;padding:0 12px 0 8px}}
+.fixbar.header.menu-open{z-index:110}      /* ลอยเหนือพื้นหลังมืด/เบลอ (.ov z=100) */
+.ov{z-index:100}
+
+/* ส่วนที่ขยาย */
+.h-menu{display:grid;grid-template-rows:0fr;visibility:hidden;
+  transition:grid-template-rows .5s cubic-bezier(.32,.72,0,1),visibility 0s .5s}
+.header.menu-open .h-menu{grid-template-rows:1fr;visibility:visible;
+  transition:grid-template-rows .62s cubic-bezier(.22,1,.36,1),visibility 0s}
+.h-in{min-height:0;overflow:hidden}
+.h-scroll{max-height:calc(100dvh - env(safe-area-inset-top,0px) - 38px - 52px - 22px);overflow-y:auto;overscroll-behavior:contain;
+  padding:0 10px 12px;scrollbar-width:none;opacity:0;transform:translateY(-10px);
+  transition:opacity .18s ease,transform .3s ease}
+.h-scroll::-webkit-scrollbar{display:none}
+.header.menu-open .h-scroll{opacity:1;transform:none;transition:opacity .4s ease .08s,transform .6s cubic-bezier(.22,1,.36,1) .04s}
+
+/* รายการเมนู */
+.header .dr-nav{padding:0;gap:0;flex:none;display:flex;flex-direction:column;border-top:1px solid rgba(255,255,255,.14)}
+:root:not([data-theme="dark"]) .header .dr-nav{border-top-color:rgba(0,0,0,.08)}
+.header .dr-nav>a,.header .dr-nav>.dr-lang-btn{position:relative;height:50px;border-radius:16px;font-size:16.5px;
+  opacity:0;translate:0 -12px;
+  transition:opacity .15s,translate .15s,background .3s,color .3s}
+.header.menu-open .dr-nav>a,.header.menu-open .dr-nav>.dr-lang-btn{opacity:1;translate:0 0;
+  transition:opacity .4s ease var(--dl),translate .65s cubic-bezier(.22,1,.36,1) var(--dl),background .3s,color .3s}
+.header .dr-nav>a:active,.header .dr-nav>.dr-lang-btn:active{background:rgba(255,255,255,.08)}
+
+/* เส้นคั่นระหว่างตัวเลือก: ขยายจากกลางออกสองข้าง */
+.header .dr-nav>a:not(:first-child)::before,.header .dr-nav>.dr-lang-btn::before{content:"";position:absolute;left:16px;right:16px;top:-.5px;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2) 18%,rgba(255,255,255,.2) 82%,transparent);
+  transform:scaleX(0);transition:transform .3s ease}
+:root:not([data-theme="dark"]) .header .dr-nav>a:not(:first-child)::before,
+:root:not([data-theme="dark"]) .header .dr-nav>.dr-lang-btn::before{background:linear-gradient(90deg,transparent,rgba(0,0,0,.14) 18%,rgba(0,0,0,.14) 82%,transparent)}
+.header.menu-open .dr-nav>a:not(:first-child)::before,.header.menu-open .dr-nav>.dr-lang-btn::before{transform:scaleX(1);
+  transition:transform .6s cubic-bezier(.22,1,.36,1) var(--dl)}
+/* เส้นข้าง ๆ รายการที่เลือกอยู่ ไม่ให้ชนขอบมน */
+.header .dr-nav>a.on::before,.header .dr-nav>a.on+a::before,.header .dr-nav>a.on+.dr-lang-btn::before{opacity:.0}
+
+/* ลำดับโผล่ทีละอัน */
+.header .dr-nav>*{--dl:.1s}
+.header .dr-nav>:nth-child(1){--dl:.10s}.header .dr-nav>:nth-child(2){--dl:.15s}.header .dr-nav>:nth-child(3){--dl:.20s}
+.header .dr-nav>:nth-child(4){--dl:.25s}.header .dr-nav>:nth-child(5){--dl:.30s}.header .dr-nav>:nth-child(6){--dl:.35s}
+.header .dr-nav>:nth-child(7){--dl:.40s}.header .dr-nav>:nth-child(8){--dl:.40s}
+
+/* ปุ่มเข้าสู่ระบบ/สมัคร ท้ายเมนู (ซ่อนเองเมื่อล็อกอินแล้ว) */
+.header .dr-f{flex-direction:row;gap:10px;padding:12px 2px 2px;margin-top:6px;border-top:1px solid rgba(255,255,255,.14)}
+:root:not([data-theme="dark"]) .header .dr-f{border-top-color:rgba(0,0,0,.08)}
+.header .dr-f button{flex:1;min-width:0;opacity:0;translate:0 -12px;transition:opacity .15s,translate .15s}
+.header.menu-open .dr-f button{opacity:1;translate:0 0;
+  transition:opacity .4s ease .46s,translate .65s cubic-bezier(.22,1,.36,1) .46s}
+.header.menu-open .dr-f button:nth-child(2){transition-delay:.52s}
+html.is-in .header .dr-f{display:none}
+
+/* ช่องภาษาที่กางออกในเมนู */
+.header .lg-pad{padding:10px 4px 6px}
+
+@media (prefers-reduced-motion:reduce){
+  .fixbar.header,.h-menu,.header.menu-open .h-menu,.h-scroll,.header.menu-open .h-scroll,
+  .header .dr-nav>a,.header .dr-nav>.dr-lang-btn,.header.menu-open .dr-nav>a,.header.menu-open .dr-nav>.dr-lang-btn,
+  .header .dr-f button,.header.menu-open .dr-f button,
+  .header .dr-nav>a::before,.header .dr-nav>.dr-lang-btn::before{transition-duration:.01ms!important;transition-delay:0s!important}
+  .header .dr-nav>a,.header .dr-nav>.dr-lang-btn,.header .dr-f button{translate:none}
+}
+
+/* ===== แผงบัญชี (กดไอคอนบัญชี): การ์ดดำ + แดงส้ม — ขนาด/ระยะทุกจุดวัดจากดีไซน์ตัวอย่าง (กว้าง 319px) ===== */
+.um{position:fixed;z-index:120;box-sizing:border-box;width:min(320px,calc(100vw - 20px));padding:13px 15px 8px;border-radius:24px;overflow-y:auto;overscroll-behavior:contain;color:#f4f4f5;
+  background:#0c0c0d;border:1px solid #1a1a1b;
+  box-shadow:0 22px 60px rgba(0,0,0,.6);
+  transform-origin:top right;opacity:0;scale:.94;translate:0 -6px;scrollbar-width:none;
+  transition:opacity .16s ease,scale .22s cubic-bezier(.22,1,.36,1),translate .22s cubic-bezier(.22,1,.36,1)}
+.um *{box-sizing:border-box}
+.um::-webkit-scrollbar{display:none}
+.um[hidden]{display:none}
+.um.on{opacity:1;scale:1;translate:0 0}
+.um button{color:inherit}
+/* โปรไฟล์ */
+.um-prof{display:flex;align-items:center;gap:13px;padding:2px 5px 17.5px}
+.um-av{position:relative;width:50px;height:50px;border-radius:50%;flex:none;display:grid;place-items:center;
+  background:rgba(var(--red-rgb),0.07);border:2px solid rgba(var(--red-rgb),0.5);
+  box-shadow:0 0 0 4px #1b0b0c,0 0 0 5px rgba(var(--red-rgb),0.42),0 0 26px 8px rgba(var(--red-rgb),0.5);top:1.5px}
+.um-av b{font-size:17px;font-weight:700;color:var(--red);line-height:1}
+.um-on{position:absolute;right:-4px;bottom:-5px;width:9px;height:9px;border-radius:50%;background:#6ad09d;border:2px solid #0c0c0d;box-sizing:content-box}
+.um-t{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-width:0}
+.um-t>b{font-size:16.5px;font-weight:600;line-height:1.1;max-width:190px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#fff}
+.um-role{display:inline-flex;align-items:center;gap:7px;height:20px;padding:0 11px 0 8px;border-radius:99px;background:#141415;border:1px solid #232325;
+  font-size:9.5px;font-weight:600;letter-spacing:.12em;color:#8b8b90;text-transform:uppercase}
+.um-role i{width:6px;height:6px;border-radius:50%;background:#5c5c61}
+/* การ์ดยอดเงิน */
+.um-bal{display:flex;align-items:center;gap:10px;padding:11px 11px;border-radius:19px;background:linear-gradient(180deg,#101011,#0f0f10);border:1px solid #1c1c1d;box-shadow:0 0 0 1px rgba(255,255,255,.01),inset 0 1px 0 rgba(255,255,255,.02)}
+.um-bi{width:42px;height:42px;border-radius:14px;flex:none;display:grid;place-items:center;color:var(--red);background:#1b0b0c;border:1px solid rgba(var(--red-rgb),0.22)}
+.um-bi svg{width:16px;height:16px}
+.um-bt{display:flex;flex-direction:column;gap:0;min-width:0;flex:1}
+.um-bt small{font-size:12px;color:#69696e;line-height:14px;font-weight:400}
+.um-bt b{font-size:16.5px;font-weight:700;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums;color:#fff}
+.um-bt em{font-style:normal;color:var(--red)}
+.um-top{flex:none;height:38px;padding:0 11px;border-radius:13px;font-size:14px;font-weight:600;color:#fff!important;white-space:nowrap;
+  background:var(--red);box-shadow:0 0 18px rgba(var(--red-rgb),0.45),0 4px 14px rgba(var(--red-rgb),0.25);transition:transform .15s}
+.um-top:active{transform:scale(.96)}
+/* รายการเมนู */
+.um-list{display:flex;flex-direction:column;margin-top:11.5px}
+.um-i{display:flex;align-items:center;gap:12.5px;width:100%;padding:10.75px 5px 10.75px 10px;border-radius:16px;text-align:left;transition:background .2s}
+.um-i:hover,.um-i:focus-visible{background:rgba(255,255,255,.04);outline:none}
+.um-i:active{transform:scale(.985)}
+.um-ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;background:#151516;border:1px solid #1f1f21;color:#adadae}
+.um-ic svg{width:14px;height:14px}
+.um-tx{display:flex;flex-direction:column;gap:1.5px;min-width:0;flex:1}
+.um-tx b{font-size:14.5px;font-weight:600;line-height:18.6px;color:#fff}
+.um-tx small{font-size:12px;color:#e6e6e8;line-height:15px;font-weight:400}
+.um-ch{flex:none;color:#3d3d41;display:grid;place-items:center}
+.um-ch svg{width:16px;height:16px;stroke-width:1.8}
+.um-sep{height:1px;margin:8px 0;background:#18181a}
+.um-out .um-ic{background:#1d0c0d;border-color:rgba(234,51,35,.20);color:#ea6a5e}
+.um-out .um-tx b{color:#ee6b60}
+.um-manage .um-ic{background:#1d0c0d;border-color:rgba(var(--red-rgb),0.22);color:var(--red)}
+/* ===== แอนิเมชันตอนเปิดแผง: แต่ละแถวเลื่อนลงมาทีละอัน (ไล่ตาม --i) ลื่น ไม่กระตุก ===== */
+.um-prof,.um-bal,.um-i,.um-sep{opacity:0;translate:0 -14px;filter:blur(5px);
+  transition:opacity .18s ease,translate .18s ease,filter .18s ease}
+.um.on .um-prof,.um.on .um-bal,.um.on .um-i,.um.on .um-sep{opacity:1;translate:0 0;filter:blur(0);
+  transition:opacity .42s ease calc(.09s + var(--i,0) * .055s),
+             translate .55s cubic-bezier(.22,1.15,.36,1) calc(.09s + var(--i,0) * .055s),
+             filter .42s ease calc(.09s + var(--i,0) * .055s),
+             background .2s ease,transform .15s ease}
+/* วงกลมโปรไฟล์เด้งเข้ามา + ปุ่มเติมเงินเรืองแสงวูบหนึ่งรอบ */
+.um .um-av{scale:.6;transition:scale .2s ease}
+.um.on .um-av{scale:1;transition:scale .6s cubic-bezier(.3,1.5,.5,1) .16s}
+.um.on .um-top{animation:umGlow 1.1s ease .5s 1 both}
+@keyframes umGlow{0%{box-shadow:0 0 18px rgba(var(--red-rgb),0.45),0 4px 14px rgba(var(--red-rgb),0.25)}
+  45%{box-shadow:0 0 28px rgba(var(--red-rgb),0.85),0 0 0 5px rgba(var(--red-rgb),0.16)}
+  100%{box-shadow:0 0 18px rgba(var(--red-rgb),0.45),0 4px 14px rgba(var(--red-rgb),0.25)}}
+@media (prefers-reduced-motion:reduce){
+  .um,.um-prof,.um-bal,.um-i,.um-sep,.um-av{transition-duration:.01ms!important;transition-delay:0s!important}
+  .um-prof,.um-bal,.um-i,.um-sep{opacity:1;translate:none;filter:none}
+  .um-av{scale:1}.um.on .um-top{animation:none}}
+
+/* ปรับแต่งแผงบัญชี (ค่าที่ผู้ใช้เลือกจากแบบจำลอง) */
+.um{width:min(263px,calc(100vw - 20px));border-radius:19px}
+.um-av{width:34px;height:34px}
+.um-av b{font-size:11.6px}
+.um-t>b{font-size:17.5px}
+.um-bt b{font-size:14.5px}
+.um-top{height:39px;padding:0 11px;font-size:12px}
+.um-ic{width:35px;height:35px}
+.um-ic svg{width:14px;height:14px}
+.um-tx b{font-size:12.5px}
+.um-tx small{font-size:13px}
+.um-i{padding-top:6.75px;padding-bottom:6.75px}
+
+/* ปรับแต่งแผงบัญชี (ค่าที่ผู้ใช้เลือกจากแบบจำลอง) */
+.um{width:min(263px,calc(100vw - 20px));border-radius:19px}
+.um-av{width:34px;height:34px}
+.um-av b{font-size:11.6px}
+.um-t>b{font-size:17.5px}
+.um-bt b{font-size:14.5px}
+.um-top{height:39px;padding:0 11px;font-size:12px}
+.um-ic{width:35px;height:35px}
+.um-ic svg{width:14px;height:14px}
+.um-tx b{font-size:12.5px}
+.um-tx small{font-size:13px}
+.um-i{padding-top:6.75px;padding-bottom:6.75px}
+
+/* ปรับแต่งแผงบัญชี (ค่าที่ผู้ใช้ปรับเองจากหน้าแบบจำลอง) */
+.um{width:min(263px,calc(100vw - 20px));border-radius:19px}
+.um-av{width:34px;height:34px}
+.um-av b{font-size:11.6px}
+.um-t>b{font-size:17.5px}
+.um-bt b{font-size:14.5px}
+.um-top{height:39px;padding:0 11px;font-size:12px}
+.um-ic{width:35px;height:35px}
+.um-ic svg{width:14px;height:14px}
+.um-tx b{font-size:12.5px}
+.um-tx small{font-size:13px}
+.um-i{padding-top:6.75px;padding-bottom:6.75px}
