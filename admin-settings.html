@@ -840,7 +840,7 @@ textarea.inp{height:auto;min-height:92px;padding:12px 17px;resize:none;line-heig
   function setLsz(n){ st.logoSz = lszClamp(n); paintLsz(); dirty(); }
   function collect(){
     var o = { logo: st.logo ? st.logo + (st.logoSz !== LSZ_DEF ? '#sz=' + st.logoSz : '') : '', banner: st.banner };
-    Object.keys(TXT).forEach(function(id){ var v = $(id).value; o[TXT[id]] = TXT[id] === 'name' ? v.trim() : v; });
+    Object.keys(TXT).forEach(function(id){ var v = $(id).value; o[TXT[id]] = TXT[id] === 'name' ? v.trim() : (/^stat_/.test(TXT[id]) && String(v).trim() === '' ? null : v); });
     ['mq','an'].forEach(function(k){ if(SPD[k].v !== SPD[k].def) o[TXT[k]] = String(o[TXT[k]]).replace(/\s+$/, '') + '\n#spd=' + SPD[k].v; });
     if(RC.v !== RC.def) o.why2_text = String(o.why2_text).replace(/\s+$/, '') + '\n#rec=' + RC.v;
     if(FIT.on && (FIT.p || FIT.c)) o.why2_text = String(o.why2_text).replace(/\s+$/, '') + '\n#fit=' + (FIT.p ? 1 : 0) + ',' + (FIT.c ? 1 : 0);
