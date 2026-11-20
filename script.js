@@ -251,7 +251,7 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); })
 function renderStats(){
   const st = (typeof SITE !== 'undefined' && SITE.stat) || {}, rl = (typeof SITE !== 'undefined' && SITE.real) || {};
   /* ตัวเลขจำลองที่ตั้งในหน้าแอดมิน (st.*) มาก่อน — ว่าง/ไม่ตั้ง = ใช้ตัวเลขจริงจากฐานข้อมูล */
-  const pick = (fake, real) => (fake === null || fake === undefined || String(fake).trim() === '' || isNaN(+fake)) ? (+real || 0) : +fake;   // '' (ช่องว่างที่แอดมินบันทึกไว้) ต้องนับเป็น "ไม่ตั้ง" ไม่ใช่เลข 0
+  const pick = (fake, real) => (fake === null || fake === undefined || String(fake).trim() === '' || isNaN(+fake) || +fake <= 0) ? (+real || 0) : +fake;   // 0 ก็นับเป็น "ไม่ตั้ง" → ใช้ตัวเลขจริงเสมอ   // '' (ช่องว่างที่แอดมินบันทึกไว้) ต้องนับเป็น "ไม่ตั้ง" ไม่ใช่เลข 0
   const fmt = n => Number(n).toLocaleString('en-US');
   $('#stats').innerHTML = [
     ['s-users','ຜູ້ໃຊ້ງານ',fmt(pick(st.users, rl.users)),'ຄົນ'],
