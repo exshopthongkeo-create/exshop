@@ -494,11 +494,26 @@ const UM_ADMIN_LINK = true;
   try { applyAgent(!!(window.exLoggedIn && exLoggedIn() && localStorage.getItem('exIsAgent') === '1')); } catch(e){}
   const manageBtn = um.querySelector('#umManage');
   let isAdmin = false;
-  function applyAdmin(a){ isAdmin = !!a; if(manageBtn) manageBtn.style.display = isAdmin ? '' : 'none'; const r = $('#umRole'); if(r) r.textContent = isAdmin ? 'ADMIN' : 'MEMBER'; }
+  /* ผู้ปล่อยเช่าเว็บ (members.is_lessor) — ไม่ใช่แอดมิน: เมนู "จัดการแผงร้าน" จะเปลี่ยนเป็น "ต่ออายุใช้งานเว็บ" ไปหน้า lessor.html */
+  let isLessor = false;
+  const mTitle = manageBtn && manageBtn.querySelector('b'), mSub = manageBtn && manageBtn.querySelector('small');
+  const mT0 = mTitle ? mTitle.textContent : '', mS0 = mSub ? mSub.textContent : '';
+  function applyAdmin(a, l){
+    isAdmin = !!a; isLessor = !!l && !a;
+    if(manageBtn){
+      manageBtn.style.display = (isAdmin || isLessor) ? '' : 'none';
+      if(mTitle) mTitle.textContent = isLessor ? 'ຕໍ່ອາຍຸໃຊ້ງານເວັບ' : mT0;
+      if(mSub) mSub.textContent = isLessor ? 'ຜູ້ໃຫ້ເຊົ່າເວັບ · ເວລານັບຖອຍຫຼັງ' : mS0;
+    }
+    const r = $('#umRole'); if(r) r.textContent = isAdmin ? 'ADMIN' : (isLessor ? 'LESSOR' : 'MEMBER');
+  }
   function refreshAdmin(){
     const t = window.exToken && exToken();
-    if(!t || !window.exRpc){ applyAdmin(false); return; }
-    exRpc('member_is_admin', { p_token: t }).then(j => applyAdmin(!!(j && j.ok && j.admin)), () => applyAdmin(false));
+    if(!t || !window.exRpc){ applyAdmin(false, false); return; }
+    exRpc('member_is_admin', { p_token: t }).then(j => {
+      if(j && j.ok && j.admin){ applyAdmin(true, false); return; }
+      exRpc('member_is_lessor', { p_token: t }).then(k => applyAdmin(false, !!(k && k.ok && k.lessor)), () => applyAdmin(false, false));
+    }, () => applyAdmin(false, false));
   }
   let open = false;
   function place(){
@@ -527,6 +542,7 @@ const UM_ADMIN_LINK = true;
   window.addEventListener('resize', () => { if(open) place(); });
   if(manageBtn) manageBtn.addEventListener('click', () => {
     set(false);
+    if(isLessor){ location.href = 'lessor.html'; return; }
     if(!isAdmin) return;
     location.href = CONFIG.routes.manage || 'admin.html';   // หน้าจัดการแผงร้าน (เปลี่ยนได้ที่ CONFIG.routes.manage)
   });
